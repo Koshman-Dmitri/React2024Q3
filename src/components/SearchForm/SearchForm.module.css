@@ -17,6 +17,10 @@
   font-size: 0.8em;
 }
 
+.input::placeholder {
+  font-size: 0.8em;
+}
+
 .button {
   margin: 20px auto 0;
   max-width: 200px;
