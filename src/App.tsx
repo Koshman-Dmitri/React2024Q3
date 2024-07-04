@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { List, SearchForm } from './components';
+import { List, Loader, SearchForm } from './components';
 import { api } from './services/api';
 import { ApiData } from './services/api.types';
 import styles from './App.module.css';
@@ -7,6 +7,7 @@ import styles from './App.module.css';
 interface Props {}
 interface State {
   data: ApiData;
+  isLoader: boolean;
 }
 
 class App extends Component<Props, State> {
@@ -16,18 +17,22 @@ class App extends Component<Props, State> {
       data: {
         astronomicalObjects: [],
       },
+      isLoader: false,
     };
   }
 
   private handleSearch = (query: string) => {
+    this.setState({ isLoader: true });
+
     api
       .searchData(query)
       .then((data) => this.setState({ data }))
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => this.setState({ isLoader: false }));
   };
 
   render(): ReactNode {
-    const { data } = this.state;
+    const { data, isLoader } = this.state;
 
     return (
       <div className={styles.container}>
@@ -36,6 +41,7 @@ class App extends Component<Props, State> {
         </section>
         <section className={styles.botSection}>
           <List data={data.astronomicalObjects} />
+          {isLoader && <Loader />}
         </section>
       </div>
     );
