@@ -19,6 +19,6 @@ export type ApiPagination = {
 };
 
 export type ApiData = {
-  page?: ApiPagination;
+  page: ApiPagination;
   astronomicalObjects: ApiElement[];
 };

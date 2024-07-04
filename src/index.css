@@ -40,6 +40,11 @@ button {
   cursor: pointer;
 }
 
+button:disabled {
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
 @media (hover: hover) and (pointer: fine) {
   button:hover {
     opacity: 0.75;

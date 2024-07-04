@@ -1,9 +1,9 @@
 import { LSKEY, LSValue } from './LS-API.types';
 
 export const lsAPI = {
-  getData: (data: keyof LSKEY): LSValue | null => {
+  getData: (data: keyof LSKEY): LSValue => {
     const value = localStorage.getItem(data);
-    return value ? (JSON.parse(value) as LSValue) : null;
+    return value ? (JSON.parse(value) as LSValue) : '';
   },
 
   setData: (key: keyof LSKEY, data: LSValue): void => {
