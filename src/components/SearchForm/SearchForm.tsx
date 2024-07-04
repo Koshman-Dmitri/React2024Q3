@@ -23,7 +23,10 @@ export class SearchForm extends Component<FormProps, FormState> {
 
     const { value } = this.state;
     const { handleSearch } = this.props;
-    handleSearch(value.trim());
+    const trimmedValue = value.trim();
+
+    this.setState({ value: trimmedValue });
+    handleSearch(trimmedValue);
   };
 
   render(): ReactNode {
