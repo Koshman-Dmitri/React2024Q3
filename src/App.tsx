@@ -73,11 +73,11 @@ class App extends Component<Props, State> {
     return (
       <ErrorBoundary>
         <div className={styles.container}>
-          <section className={styles.topSection}>
+          <section>
             <SearchForm initialSearch={initialSearch} handleSearch={this.handleSearch} />
           </section>
 
-          <section className={styles.botSection}>
+          <section className={styles.main}>
             <List data={data.astronomicalObjects} />
             {isLoader && <Loader />}
           </section>

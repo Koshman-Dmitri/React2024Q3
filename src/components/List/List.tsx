@@ -16,8 +16,7 @@ export class List extends PureComponent<{ data: ApiElement[] }> {
             )}
             {el.astronomicalObjectType && (
               <p>
-                Astronomical object type:{' '}
-                <span className={styles.valueText}>{el.astronomicalObjectType}</span>
+                Object type: <span className={styles.valueText}>{el.astronomicalObjectType}</span>
               </p>
             )}
             {el.location && (

@@ -9,11 +9,8 @@
   min-height: 100vh;
 }
 
-.topSection {
-  margin-bottom: 0;
-}
-
-.botSection {
+.main {
   flex-grow: 1;
   display: flex;
+  height: 20vh;
 }

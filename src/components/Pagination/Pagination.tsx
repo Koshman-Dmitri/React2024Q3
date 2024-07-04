@@ -10,7 +10,7 @@ export class Pagination extends PureComponent<PaginationProps> {
     return (
       <div className={styles.pagination}>
         <p className={styles.pageCounter}>
-          Page: {showCurPage} / {totalPages}
+          Page: {showCurPage}/{totalPages}
         </p>
         {totalPages !== 0 && (
           <>

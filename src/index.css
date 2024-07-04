@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Sterilict;
+  src: url('./assets/fonts/Sterilict.ttf');
+}
+
 * {
   padding: 0px;
   margin: 0px;
@@ -7,19 +12,30 @@
 
 html {
   height: 100%;
+  font-family: Sterilict, Helvetica, Arial, sans-serif;
   font-size: 10px;
+  letter-spacing: 1px;
+  word-spacing: 10px;
 }
 
 body {
   height: 100%;
-  background: rgb(2,0,36);
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
 }
 
 input {
   display: block;
   width: 100%;
   padding: 10px 16px;
+  font-family: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
   color: inherit;
   border: 2px solid black;
   border-radius: 8px;
@@ -30,7 +46,10 @@ button {
   display: block;
   padding: 10px;
   width: 100%;
+  font-family: inherit;
   font-size: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
   color: white;
   background-color: black;
   border: unset;
@@ -48,5 +67,11 @@ button:disabled {
 @media (hover: hover) and (pointer: fine) {
   button:hover {
     opacity: 0.75;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 6px;
   }
 }
