@@ -35,7 +35,7 @@ class App extends Component<Props, State> {
     this.handleSearch(value || '');
   }
 
-  private handleSearch = (query: string, page?: number) => {
+  private handleSearch = (query: string, page?: number): void => {
     lsAPI.setData('prevSearch_KD', query);
     this.setState({ isLoader: true });
 

@@ -10,7 +10,7 @@ export class TestErrorComponent extends Component<Props, State> {
     this.state = { isError: false };
   }
 
-  private handleClick = () => {
+  private handleClick = (): void => {
     this.setState({ isError: true });
   };
 
