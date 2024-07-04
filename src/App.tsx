@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { SearchForm } from './components/SearchForm/SearchForm';
+import { List, SearchForm } from './components';
 import { api } from './services/api';
 import { ApiData } from './services/api.types';
 import styles from './App.module.css';
@@ -35,9 +35,7 @@ class App extends Component<Props, State> {
           <SearchForm handleSearch={this.handleSearch} />
         </section>
         <section className={styles.botSection}>
-          {data.astronomicalObjects.map((obj) => (
-            <div key={obj.uid}>{obj.name}</div>
-          ))}
+          <List data={data.astronomicalObjects} />
         </section>
       </div>
     );

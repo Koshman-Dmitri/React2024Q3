@@ -1,8 +1,11 @@
 .container {
-  width: 100%;
-  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   padding: 0 20px;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100vh;
 }
 
 .topSection {
@@ -10,6 +13,7 @@
 }
 
 .botSection {
-  height: 80vh;
-  border: 1px solid black;
+  flex-grow: 1;
+  display: flex;
+  padding-bottom: 20px;
 }
