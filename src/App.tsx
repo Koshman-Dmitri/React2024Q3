@@ -1,7 +1,7 @@
 import { Component, ReactNode } from 'react';
 import { List, Loader, SearchForm } from './components';
-import { api } from './services/api';
-import { ApiData } from './services/api.types';
+import { api, lsAPI } from './services';
+import { ApiData } from './services/ST-API/api.types';
 import styles from './App.module.css';
 
 interface Props {}
@@ -21,7 +21,13 @@ class App extends Component<Props, State> {
     };
   }
 
+  componentDidMount(): void {
+    const value = lsAPI.getData('prevSearch_KD');
+    this.handleSearch(value || '');
+  }
+
   private handleSearch = (query: string) => {
+    lsAPI.setData('prevSearch_KD', query);
     this.setState({ isLoader: true });
 
     api
@@ -33,11 +39,12 @@ class App extends Component<Props, State> {
 
   render(): ReactNode {
     const { data, isLoader } = this.state;
+    const initialSearch = lsAPI.getData('prevSearch_KD') || '';
 
     return (
       <div className={styles.container}>
         <section className={styles.topSection}>
-          <SearchForm handleSearch={this.handleSearch} />
+          <SearchForm initialSearch={initialSearch} handleSearch={this.handleSearch} />
         </section>
         <section className={styles.botSection}>
           <List data={data.astronomicalObjects} />

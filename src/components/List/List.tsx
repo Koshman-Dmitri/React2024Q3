@@ -1,5 +1,5 @@
 import { PureComponent, ReactNode } from 'react';
-import { ApiElement } from '../../services/api.types';
+import { ApiElement } from '../../services/ST-API/api.types';
 import styles from './List.module.css';
 
 export class List extends PureComponent<{ data: ApiElement[] }> {
