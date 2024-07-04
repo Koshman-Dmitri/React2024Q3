@@ -1,0 +1,7 @@
+.errorMsg {
+  padding: 100px;
+  font-size: 4rem;
+  text-align: center;
+  text-shadow: 0 0 10px black;
+  color: crimson;
+}

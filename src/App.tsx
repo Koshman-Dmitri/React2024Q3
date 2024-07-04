@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react';
-import { List, Loader, SearchForm } from './components';
+import { ErrorBoundary, List, Loader, SearchForm, TestErrorComponent } from './components';
 import { api, lsAPI } from './services';
 import { ApiData } from './services/ST-API/api.types';
 import styles from './App.module.css';
@@ -42,15 +42,20 @@ class App extends Component<Props, State> {
     const initialSearch = lsAPI.getData('prevSearch_KD') || '';
 
     return (
-      <div className={styles.container}>
-        <section className={styles.topSection}>
-          <SearchForm initialSearch={initialSearch} handleSearch={this.handleSearch} />
-        </section>
-        <section className={styles.botSection}>
-          <List data={data.astronomicalObjects} />
-          {isLoader && <Loader />}
-        </section>
-      </div>
+      <ErrorBoundary>
+        <div className={styles.container}>
+          <section className={styles.topSection}>
+            <SearchForm initialSearch={initialSearch} handleSearch={this.handleSearch} />
+          </section>
+
+          <section className={styles.botSection}>
+            <List data={data.astronomicalObjects} />
+            {isLoader && <Loader />}
+          </section>
+
+          <TestErrorComponent />
+        </div>
+      </ErrorBoundary>
     );
   }
 }
