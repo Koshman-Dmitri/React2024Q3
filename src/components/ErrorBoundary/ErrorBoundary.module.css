@@ -1,7 +1,38 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+
 .errorMsg {
-  padding: 100px;
-  font-size: 4rem;
+  padding: 40px 20px;
+  font-size: 3rem;
   text-align: center;
-  text-shadow: 0 0 3px white;
-  color: crimson;
+  text-shadow: 0 0 3px black;
+  border-radius: 10px;
+  background-color: crimson;
+  color: black;
+  box-shadow: 1px 1px 8px white;
+}
+
+.errorTitle {
+  margin-bottom: 50px;
+  font-size: 4rem;
+}
+
+.errorDesc {
+  margin-top: 5px;
+  font-size: 3.2rem;
+}
+
+.closeBtn {
+  margin: 20px auto 0;
+  max-width: 40%;
 }

@@ -7,7 +7,6 @@
   border-radius: 20px;
   color: white;
   overflow-y: auto;
-  scrollbar-width: thin;
 }
 
 .listElement {
