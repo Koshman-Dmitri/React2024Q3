@@ -1,0 +1,35 @@
+.form {
+  padding: 20px;
+  font-size: 3.6rem;
+  text-align: center;
+  border: 10px groove gold;
+  border-radius: 20px;
+}
+
+.label {
+  font-weight: 500;
+  color: white;
+  text-shadow: 0 0 4px black;
+}
+
+.input {
+  margin: 5px auto;
+  max-width: 500px;
+  font-size: 0.8em;
+  color: black;
+}
+
+.input:focus {
+  background-color: gold;
+}
+
+.input::placeholder {
+  font-size: 0.8em;
+}
+
+.button {
+  margin: 20px auto 0;
+  max-width: 200px;
+  font-size: 0.8em;
+  background-color: goldenrod;
+}

@@ -1,0 +1,13 @@
+.errorButton {
+  max-width: 240px;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: crimson;
+  border: 2px solid black;
+}
+
+@media (max-width: 768px) {
+  .errorButton {
+    max-width: 200px;
+  }
+}
