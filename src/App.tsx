@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ErrorBoundary, Footer, List, Loader, SearchForm } from './components';
+import { ErrorBoundary, Footer, Loader, Main, SearchForm } from './components';
 import { api, lsAPI } from './services';
 import { ApiData } from './services/ST-API/api.types';
 import styles from './App.module.css';
@@ -53,10 +53,7 @@ function App() {
           <SearchForm initialSearch={getSearchParam()} handleSearch={handleSearch} />
         </section>
 
-        <section className={styles.main}>
-          <List data={state.astronomicalObjects} />
-          {isLoader && <Loader />}
-        </section>
+        <Main data={state.astronomicalObjects}>{isLoader && <Loader />}</Main>
 
         <Footer
           isFirstPage={state.page.firstPage}

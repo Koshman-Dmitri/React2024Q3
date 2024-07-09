@@ -1,0 +1,37 @@
+.details {
+  position: relative;
+  padding: 10px;
+  max-width: 100%;
+  width: 100%;
+  font-size: 2.4rem;
+  list-style-type: none;
+  text-align: center;
+  border: 8px solid white;
+  border-radius: 20px;
+  color: white;
+  overflow-y: auto;
+}
+
+.listElement {
+  padding: 10px;
+  text-shadow: 0 0 4px black;
+}
+
+.valueText {
+  font-weight: 600;
+  color: gold;
+}
+
+.closeBtn {
+  margin: 60px auto 0;
+  max-width: fit-content;
+  border: 2px solid black;
+  background-color: crimson;
+}
+
+.closeInstruction {
+  margin-top: 20px;
+  font-size: 1.6rem;
+  text-align: justify;
+  text-shadow: 0 0 2px black;
+}
