@@ -3,6 +3,4 @@ export interface PaginationProps {
   isLastPage: boolean;
   currentPage: number;
   totalPages: number;
-  handlePrev: () => void;
-  handleNext: () => void;
 }

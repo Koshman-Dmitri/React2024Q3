@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { lsAPI } from '../../services';
 import styles from './SearchForm.module.css';
 
-type FormProps = {
-  initialSearch: string;
-  handleSearch: (query: string) => void;
-};
+export function SearchForm() {
+  const [value, setValue] = useState(lsAPI.getData('prevSearch_KD'));
+  const navigate = useNavigate();
+  const { search } = useParams();
 
-export function SearchForm({ initialSearch, handleSearch }: FormProps) {
-  const [value, setValue] = useState(initialSearch);
+  useEffect(() => {
+    setValue(search || '');
+  }, [search]);
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>): void => {
     e?.preventDefault();
@@ -15,7 +18,7 @@ export function SearchForm({ initialSearch, handleSearch }: FormProps) {
     const trimmedValue = value.trim();
     setValue(trimmedValue);
 
-    handleSearch(trimmedValue);
+    navigate(trimmedValue, { state: 'test' });
   };
 
   return (
