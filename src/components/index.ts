@@ -7,6 +7,7 @@ import { Pagination } from './Pagination/Pagination';
 import { Footer } from './Footer/Footer';
 import { Main } from './Main/Main';
 import { DetailList } from './DetailList/DetailList';
+import { ErrorPage } from './ErrorPage/ErrorPage';
 
 export {
   SearchForm,
@@ -18,4 +19,5 @@ export {
   Footer,
   Main,
   DetailList,
+  ErrorPage,
 };
