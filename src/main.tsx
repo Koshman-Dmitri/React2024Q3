@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ErrorPage, Main } from './components';
+import { DetailList, ErrorPage, Main } from './components';
 import App from './App';
 import './index.css';
 
@@ -12,8 +12,24 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: '/',
+        element: <Main />,
+        children: [
+          {
+            path: 'detail',
+            element: <DetailList />,
+          },
+        ],
+      },
+      {
         path: '/:search',
         element: <Main />,
+        children: [
+          {
+            path: 'detail',
+            element: <DetailList />,
+          },
+        ],
       },
     ],
   },

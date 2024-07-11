@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ApiElement } from '../../services/ST-API/api.types';
 import styles from './List.module.css';
 
@@ -20,9 +21,9 @@ export function List({
           onClick={() => clickHandler(el.uid)}
         >
           {el.name && (
-            <p>
+            <Link to="detail" className={styles.link}>
               Name: <span className={styles.valueText}>{el.name}</span>
-            </p>
+            </Link>
           )}
         </li>
       );

@@ -1,4 +1,5 @@
-import { ErrorBoundary, Main, SearchForm } from './components';
+import { Outlet } from 'react-router-dom';
+import { ErrorBoundary, SearchForm } from './components';
 import styles from './App.module.css';
 
 function App() {
@@ -6,7 +7,7 @@ function App() {
     <ErrorBoundary>
       <div className={styles.container}>
         <SearchForm />
-        <Main />
+        <Outlet />
       </div>
     </ErrorBoundary>
   );

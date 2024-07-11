@@ -17,8 +17,7 @@ export function SearchForm() {
 
     const trimmedValue = value.trim();
     setValue(trimmedValue);
-
-    navigate(trimmedValue, { state: 'test' });
+    navigate(trimmedValue);
   };
 
   return (

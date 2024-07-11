@@ -9,8 +9,12 @@
   overflow-y: auto;
 }
 
-.listElement {
+.link {
+  display: block;
   padding: 10px;
+}
+
+.listElement {
   text-shadow: 0 0 4px black;
   cursor: pointer;
 }
