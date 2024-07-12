@@ -25,12 +25,11 @@ describe('SearchForm', () => {
   });
 
   test('Get value from LS on mounting', () => {
-    const testValue = 'TestValue';
-    localStorage.setItem('prevSearch_KD', testValue);
-
+    const mockValue = 'Test';
+    localStorage.setItem('prevSearch_KD', JSON.stringify(mockValue));
     renderWithRouter(<SearchForm />);
-    const input = screen.getByLabelText<HTMLInputElement>('Search astronomical object:');
 
-    setTimeout(() => expect(input.value).toBe(testValue), 100);
+    const input = screen.getByLabelText<HTMLInputElement>('Search astronomical object:');
+    expect(input.value).toBe(mockValue);
   });
 });
