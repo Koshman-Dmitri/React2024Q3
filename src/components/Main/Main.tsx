@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
 import { initState } from './Main.consts';
-import { api, lsAPI } from '../../services';
+import { api } from '../../services';
 import { Loader } from '../Loader/Loader';
 import { List } from '../List/List';
 import { Footer } from '../Footer/Footer';
@@ -17,7 +17,6 @@ export function Main() {
   const closeDetails = useCloseDetails();
 
   useEffect(() => {
-    lsAPI.setData('prevSearch_KD', search || '');
     const page = Number(queryParams.get('page')) - 1;
     const hasDetails = queryParams.has('details');
 

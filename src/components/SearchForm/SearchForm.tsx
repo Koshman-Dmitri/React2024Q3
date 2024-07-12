@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { lsAPI } from '../../services';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 import styles from './SearchForm.module.css';
 
 export function SearchForm() {
-  const [value, setValue] = useState(lsAPI.getData('prevSearch_KD'));
+  const [lsValue, setLsValue] = useLocalStorage();
+  const [value, setValue] = useState(lsValue);
   const navigate = useNavigate();
-  const { search } = useParams();
-
-  useEffect(() => {
-    setValue(search || '');
-  }, [search]);
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>): void => {
     e?.preventDefault();
+    const trimValue = value.trim();
 
-    const trimmedValue = value.trim();
-    setValue(trimmedValue);
-    navigate(trimmedValue);
+    setValue(trimValue);
+    setLsValue(trimValue);
+    navigate(trimValue);
   };
 
   return (
