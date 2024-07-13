@@ -10,3 +10,8 @@
   pointer-events: none;
   cursor: pointer;
 }
+
+.error {
+  text-align: center;
+  color: crimson;
+}

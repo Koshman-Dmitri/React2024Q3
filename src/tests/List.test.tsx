@@ -4,7 +4,6 @@ import { renderWithRouter } from './utils/utils';
 import { List } from '../components';
 import '@testing-library/jest-dom';
 
-const mockClickHandler = vi.fn();
 const mockCLoseHandler = vi.fn();
 const data = [
   {
@@ -38,37 +37,21 @@ const data = [
 
 describe('List', () => {
   test('Should rendered specified numbers of elements', () => {
-    renderWithRouter(
-      <List data={data} clickHandler={mockClickHandler} closeHandler={mockCLoseHandler} />
-    );
+    renderWithRouter(<List data={data} closeHandler={mockCLoseHandler} />);
 
     const list = screen.getAllByRole('presentation')[0];
     expect(list.childElementCount).toBe(3);
   });
 
   test('Should display message if no data', () => {
-    renderWithRouter(
-      <List data={[]} clickHandler={mockClickHandler} closeHandler={mockCLoseHandler} />
-    );
+    renderWithRouter(<List data={[]} closeHandler={mockCLoseHandler} />);
 
     const message = screen.getByText(/No results/i);
     expect(message).toBeInTheDocument();
   });
 
-  test('Call click handler', async () => {
-    renderWithRouter(
-      <List data={data} clickHandler={mockClickHandler} closeHandler={mockCLoseHandler} />
-    );
-
-    const element = screen.getAllByRole('presentation')[1];
-    await userEvent.click(element);
-    expect(mockClickHandler).toHaveBeenCalledOnce();
-  });
-
   test('Call close handler', async () => {
-    renderWithRouter(
-      <List data={[]} clickHandler={mockClickHandler} closeHandler={mockCLoseHandler} />
-    );
+    renderWithRouter(<List data={[]} closeHandler={mockCLoseHandler} />);
 
     const element = screen.getByRole('presentation');
     await userEvent.click(element);
@@ -76,9 +59,7 @@ describe('List', () => {
   });
 
   test('Render relevant data', () => {
-    renderWithRouter(
-      <List data={data} clickHandler={mockClickHandler} closeHandler={mockCLoseHandler} />
-    );
+    renderWithRouter(<List data={data} closeHandler={mockCLoseHandler} />);
 
     const elementName1 = screen.getByText('One');
     const elementName2 = screen.getByText('Two');

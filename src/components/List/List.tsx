@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ApiElement } from '../../services/ST-API/api.types';
 import styles from './List.module.css';
 
-export function List({
-  data,
-  clickHandler,
-  closeHandler,
-}: {
-  data: ApiElement[];
-  clickHandler: (id: string) => void;
-  closeHandler: () => void;
-}) {
+export function List({ data, closeHandler }: { data: ApiElement[]; closeHandler: () => void }) {
+  const [queryParams, setQueryParams] = useSearchParams();
+
+  const handlerElementClick = (id: string): void => {
+    const page = queryParams.get('page') || '';
+    setQueryParams({ page, details: id });
+  };
+
   const listElements = data.length ? (
     data.map((el) => {
       return (
@@ -18,7 +17,7 @@ export function List({
           key={el.uid}
           className={styles.listElement}
           role="presentation"
-          onClick={() => clickHandler(el.uid)}
+          onClick={() => handlerElementClick(el.uid)}
         >
           {el.name && (
             <Link to="detail" className={styles.link}>

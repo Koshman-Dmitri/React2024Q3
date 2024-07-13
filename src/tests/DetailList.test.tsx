@@ -25,8 +25,8 @@ describe('Detail List', () => {
 
     renderWithRouter(<DetailList />);
 
-    const todoElement = await screen.findByText('Fake type');
-    expect(todoElement).toBeInTheDocument();
+    const testElement = await screen.findByText('Fake type');
+    expect(testElement).toBeInTheDocument();
   });
 
   test('Close on click', () => {

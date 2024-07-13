@@ -11,6 +11,7 @@ import styles from './Main.module.css';
 export function Main() {
   const [state, setState] = useState(initState);
   const [isLoader, setIsLoader] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isLinksActive, setIsLinksActive] = useState(true);
 
   const [queryParams, setQueryParams] = useSearchParams();
@@ -28,6 +29,7 @@ export function Main() {
       .searchData(search || '', page)
       .then((result) => {
         setState(result);
+        setIsError(false);
 
         if (result.page.totalPages > 0) {
           const newPage = String(result.page.pageNumber + 1);
@@ -40,26 +42,19 @@ export function Main() {
           }
         }
       })
-      .catch((error) => console.log(error))
+      .catch(() => setIsError(true))
       .finally(() => {
         setIsLoader(false);
         setIsLinksActive(true);
       });
   }, [search, queryParams, setQueryParams]);
 
-  const handlerElementClick = (id: string): void => {
-    const page = queryParams.get('page') || '';
-    setQueryParams({ page, details: id });
-  };
-
   return (
     <>
+      {isError && <h1 className={styles.error}>Could not fetch data from API</h1>}
+
       <section className={isLinksActive ? styles.main : `${styles.main} ${styles.inactive}`}>
-        <List
-          data={state.astronomicalObjects}
-          clickHandler={handlerElementClick}
-          closeHandler={closeDetails}
-        />
+        <List data={state.astronomicalObjects} closeHandler={closeDetails} />
 
         {queryParams.has('details') && <Outlet />}
         {isLoader && <Loader />}
