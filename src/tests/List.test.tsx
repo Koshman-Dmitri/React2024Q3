@@ -74,4 +74,17 @@ describe('List', () => {
     await userEvent.click(element);
     expect(mockCLoseHandler).toHaveBeenCalledOnce();
   });
+
+  test('Render relevant data', () => {
+    renderWithRouter(
+      <List data={data} clickHandler={mockClickHandler} closeHandler={mockCLoseHandler} />
+    );
+
+    const elementName1 = screen.getByText('One');
+    const elementName2 = screen.getByText('Two');
+    const elementName3 = screen.getByText('Three');
+    expect(elementName1).toBeInTheDocument();
+    expect(elementName2).toBeInTheDocument();
+    expect(elementName3).toBeInTheDocument();
+  });
 });
