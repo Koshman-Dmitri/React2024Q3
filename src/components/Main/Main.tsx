@@ -11,6 +11,7 @@ import styles from './Main.module.css';
 export function Main() {
   const [state, setState] = useState(initState);
   const [isLoader, setIsLoader] = useState(false);
+  const [isLinksActive, setIsLinksActive] = useState(true);
 
   const [queryParams, setQueryParams] = useSearchParams();
   const { search } = useParams();
@@ -21,6 +22,8 @@ export function Main() {
     const hasDetails = queryParams.has('details');
 
     if (!hasDetails) setIsLoader(true);
+    setIsLinksActive(false);
+
     api
       .searchData(search || '', page)
       .then((result) => {
@@ -38,7 +41,10 @@ export function Main() {
         }
       })
       .catch((error) => console.log(error))
-      .finally(() => setIsLoader(false));
+      .finally(() => {
+        setIsLoader(false);
+        setIsLinksActive(true);
+      });
   }, [search, queryParams, setQueryParams]);
 
   const handlerElementClick = (id: string): void => {
@@ -48,7 +54,7 @@ export function Main() {
 
   return (
     <>
-      <section className={styles.main}>
+      <section className={isLinksActive ? styles.main : `${styles.main} ${styles.inactive}`}>
         <List
           data={state.astronomicalObjects}
           clickHandler={handlerElementClick}

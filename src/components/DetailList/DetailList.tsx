@@ -14,8 +14,7 @@ export function DetailList() {
   const closeDetails = useCloseDetails();
 
   useEffect(() => {
-    const details = queryParams.get('details');
-    if (!details) return;
+    const details = queryParams.get('details') || '';
 
     setIsLoader(true);
     api

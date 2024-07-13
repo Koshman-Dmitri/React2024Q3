@@ -3,4 +3,10 @@
   display: flex;
   gap: 10px;
   height: 20vh;
+  pointer-events: unset;
+}
+
+.inactive {
+  pointer-events: none;
+  cursor: pointer;
 }
