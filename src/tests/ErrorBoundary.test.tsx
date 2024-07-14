@@ -1,15 +1,27 @@
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from './utils/utils';
-import { ErrorBoundary, Main } from '../components';
+import { ErrorBoundary, TestErrorComponent } from '../components';
 import '@testing-library/jest-dom';
 
 describe('ErrorBoundary', () => {
+  test('Should not render on init', () => {
+    renderWithRouter(
+      <ErrorBoundary>
+        <TestErrorComponent />
+      </ErrorBoundary>
+    );
+
+    const errorBtn = screen.queryByText('Fallback message');
+
+    expect(errorBtn).not.toBeInTheDocument();
+  });
+
   test('Should catch error', async () => {
     await act(() =>
       renderWithRouter(
         <ErrorBoundary>
-          <Main />
+          <TestErrorComponent />
         </ErrorBoundary>
       )
     );
@@ -24,7 +36,7 @@ describe('ErrorBoundary', () => {
     await act(() =>
       renderWithRouter(
         <ErrorBoundary>
-          <Main />
+          <TestErrorComponent />
         </ErrorBoundary>
       )
     );

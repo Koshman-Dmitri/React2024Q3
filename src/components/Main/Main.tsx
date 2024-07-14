@@ -16,7 +16,7 @@ export function Main() {
 
   const [queryParams, setQueryParams] = useSearchParams();
   const { search } = useParams();
-  const closeDetails = useCloseDetails();
+  const { closeDetails } = useCloseDetails();
 
   useEffect(() => {
     const page = Number(queryParams.get('page')) - 1;

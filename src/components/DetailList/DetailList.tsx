@@ -11,7 +11,7 @@ export function DetailList() {
   const [state, setState] = useState(initDetailData);
   const [isLoader, setIsLoader] = useState(false);
   const [queryParams] = useSearchParams();
-  const closeDetails = useCloseDetails();
+  const { closeDetails } = useCloseDetails();
 
   useEffect(() => {
     const details = queryParams.get('details') || '';
