@@ -18,6 +18,8 @@ describe('ErrorBoundary', () => {
   });
 
   test('Should catch error', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => null);
+
     await act(() =>
       renderWithRouter(
         <ErrorBoundary>
@@ -33,6 +35,8 @@ describe('ErrorBoundary', () => {
   });
 
   test('Should close onclick', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => null);
+
     await act(() =>
       renderWithRouter(
         <ErrorBoundary>
