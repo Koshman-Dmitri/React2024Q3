@@ -9,13 +9,18 @@
   overflow-y: auto;
 }
 
-.listElement {
+.link {
+  display: block;
   padding: 10px;
+  border-top: 2px solid aqua;
+}
+
+.listElement {
   text-shadow: 0 0 4px black;
+  cursor: pointer;
 }
 
 .listElement + .listElement {
-  border-top: 2px solid aqua;
   box-shadow: 0 0 4px aqua;
 }
 
@@ -29,4 +34,10 @@
   top: 50%;
   transform: translateY(-50%);
   text-shadow: 0 0 4px red;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .listElement:hover {
+    background-color: goldenrod;
+  }
 }

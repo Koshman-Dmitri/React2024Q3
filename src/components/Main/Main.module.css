@@ -1,0 +1,18 @@
+.main {
+  flex-grow: 1;
+  display: flex;
+  gap: 10px;
+  height: 20vh;
+  pointer-events: unset;
+}
+
+.inactive {
+  pointer-events: none;
+  cursor: pointer;
+  filter: blur(2px);
+}
+
+.error {
+  text-align: center;
+  color: crimson;
+}
