@@ -9,6 +9,7 @@
 .inactive {
   pointer-events: none;
   cursor: pointer;
+  filter: blur(2px);
 }
 
 .error {
