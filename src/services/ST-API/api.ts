@@ -1,3 +1,4 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ApiData, ApiElement } from './api.types';
 
 const OBJECT_ENDPOINT = 'https://stapi.co/api/v2/rest/astronomicalObject?uid=';
@@ -23,3 +24,13 @@ export const api = {
     return response.json() as Promise<ApiData>;
   },
 };
+
+export const starTrekApi = createApi({
+  reducerPath: 'starTrekApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://stapi.co/api/v2/rest/astronomicalObject' }),
+  endpoints: (builder) => ({
+    getObjectById: builder.query<{ astronomicalObject: ApiElement }, string>({
+      query: (id) => `?uid=${id}`,
+    }),
+  }),
+});
