@@ -1,17 +1,21 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { ApiElement } from '../../services/ST-API/api.types';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { useCloseDetails } from '../../hooks/useCloseDetails';
 import styles from './List.module.css';
 
-export function List({ data, closeHandler }: { data: ApiElement[]; closeHandler: () => void }) {
+export function List() {
   const [queryParams, setQueryParams] = useSearchParams();
+  const { closeDetails } = useCloseDetails();
+
+  const listData = useAppSelector((state) => state.list);
 
   const handlerElementClick = (id: string): void => {
     const page = queryParams.get('page') || '';
     setQueryParams({ page, details: id });
   };
 
-  const listElements = data.length ? (
-    data.map((el) => {
+  const listElements = listData.length ? (
+    listData.map((el) => {
       return (
         <li
           key={el.uid}
@@ -36,7 +40,7 @@ export function List({ data, closeHandler }: { data: ApiElement[]; closeHandler:
       className={styles.list}
       role="presentation"
       onClick={(e) => {
-        if (e.target === e.currentTarget) closeHandler();
+        if (e.target === e.currentTarget) closeDetails();
       }}
     >
       {listElements}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { lsAPI } from '../../services';
+import { lsAPI } from '../../services/LS-API/LS-API';
 import styles from './SearchForm.module.css';
 
 export function SearchForm() {

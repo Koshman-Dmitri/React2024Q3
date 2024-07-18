@@ -11,10 +11,10 @@ describe('Pagination', () => {
 
     renderWithRouter(
       <Pagination
-        isFirstPage={false}
-        isLastPage={false}
-        currentPage={currentPage}
-        totalPages={10}
+      // isFirstPage={false}
+      // isLastPage={false}
+      // currentPage={currentPage}
+      // totalPages={10}
       />
     );
     const { result } = renderHook(() => useSearchParams(), { wrapper: wrapperForHook });

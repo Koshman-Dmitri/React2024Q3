@@ -22,3 +22,8 @@ export type ApiData = {
   page: ApiPagination;
   astronomicalObjects: ApiElement[];
 };
+
+export type SearchProps = {
+  query: string;
+  page: number;
+};
