@@ -21,7 +21,13 @@ export function List() {
 
   const handlerFavoriteChange = (event: ChangeEvent<HTMLInputElement>, el: ApiElement): void => {
     if (event.target.checked) {
-      dispatch(addFavorite(el));
+      let url = window.location.href;
+
+      if (!url.includes('detail?')) {
+        url = url.split('?').join(url.includes('/?') ? 'detail?' : '/detail?');
+      }
+
+      dispatch(addFavorite({ ...el, url }));
     } else {
       dispatch(deleteFavorite(el.uid));
     }

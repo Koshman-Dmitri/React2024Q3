@@ -1,14 +1,13 @@
 import { clearFavorite } from '../../app/slices/favoriteSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { createCsvHref } from '../../utils/createCsvHref';
 import styles from './FlyOut.module.css';
 
 export function FlyOut() {
-  const count = useAppSelector((state) => state.favorite.length);
+  const favorite = useAppSelector((state) => state.favorite);
   const dispatch = useAppDispatch();
 
-  const handlerDownload = (): void => {
-    console.log('TODO download');
-  };
+  const count = favorite.length;
 
   return (
     <div className={count ? `${styles.flyOut} ${styles.active}` : styles.flyOut}>
@@ -20,8 +19,14 @@ export function FlyOut() {
         <button className={styles.btnClear} type="button" onClick={() => dispatch(clearFavorite())}>
           Unsellect all
         </button>
-        <button className={styles.btnDownload} type="button" onClick={handlerDownload}>
-          Download
+        <button className={styles.btnDownload} type="button">
+          <a
+            className={styles.linkDownload}
+            href={createCsvHref(favorite)}
+            download={`${count}_astrObject.csv`}
+          >
+            Download
+          </a>
         </button>
       </div>
     </div>

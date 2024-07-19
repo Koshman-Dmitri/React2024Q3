@@ -6,6 +6,7 @@ export type ApiElement = {
     uid: string;
     name: string;
   };
+  url?: string;
 };
 
 export type ApiPagination = {

@@ -47,7 +47,24 @@
 }
 
 .btnDownload {
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.linkDownload {
+  display: block;
+  padding: 10px;
+  border-radius: 7px;
   background-color: darkcyan;
+  box-shadow: 1px 1px 2px black;
+  transition: opacity 0.2s ease-in;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .linkDownload:hover {
+    opacity: 0.75;
+  }
 }
 
 @media (max-width: 768px) {
