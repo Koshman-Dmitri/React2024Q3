@@ -8,6 +8,7 @@ import { Footer } from './Footer/Footer';
 import { Main } from './Main/Main';
 import { DetailList } from './DetailList/DetailList';
 import { ErrorPage } from './ErrorPage/ErrorPage';
+import { ThemeToggler } from './ThemeToggler/ThemeToggler';
 
 export {
   SearchForm,
@@ -20,4 +21,5 @@ export {
   Main,
   DetailList,
   ErrorPage,
+  ThemeToggler,
 };

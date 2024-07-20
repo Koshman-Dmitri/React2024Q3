@@ -6,6 +6,10 @@
   border: 2px solid black;
 }
 
+.errorButton.dark {
+  background-color: firebrick;
+}
+
 @media (max-width: 768px) {
   .errorButton {
     max-width: 200px;

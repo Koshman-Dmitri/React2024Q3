@@ -1,11 +1,13 @@
 import { useSearchParams } from 'react-router-dom';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
+import { useTheme } from '../../hooks/useTheme';
 import { starTrekApi } from '../../services/ST-API/api';
 import { Loader } from '../Loader/Loader';
 import styles from './DetailList.module.css';
 
 export function DetailList() {
   const { closeDetails } = useCloseDetails();
+  const { isLight } = useTheme();
 
   const [queryParams] = useSearchParams();
   const details = queryParams.get('details') || '';
@@ -13,7 +15,7 @@ export function DetailList() {
   const { data, isFetching } = starTrekApi.useGetObjectByIdQuery(details);
 
   return (
-    <div className={styles.details}>
+    <div className={isLight ? styles.details : `${styles.details} ${styles.dark}`}>
       {data && (
         <p>
           Object type:{' '}

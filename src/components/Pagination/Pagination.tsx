@@ -1,9 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/reduxHooks';
+import { useTheme } from '../../hooks/useTheme';
 import styles from './Pagination.module.css';
 
 export function Pagination() {
   const [queryParams, setQueryParams] = useSearchParams();
+  const { isLight } = useTheme();
 
   const { firstPage, lastPage, pageNumber, totalPages } = useAppSelector(
     (state) => state.pagination
@@ -13,7 +15,7 @@ export function Pagination() {
   const page = Number(queryParams.get('page'));
 
   return (
-    <div className={styles.pagination}>
+    <div className={isLight ? styles.pagination : `${styles.pagination} ${styles.dark}`}>
       <p className={styles.pageCounter}>
         Page: {showCurPage}/{totalPages}
       </p>

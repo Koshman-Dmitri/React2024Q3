@@ -3,12 +3,14 @@ import { ChangeEvent } from 'react';
 import { ApiElement } from '../../services/ST-API/api.types';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
+import { useTheme } from '../../hooks/useTheme';
 import { addFavorite, deleteFavorite } from '../../app/slices/favoriteSlice';
 import styles from './List.module.css';
 
 export function List() {
   const [queryParams, setQueryParams] = useSearchParams();
   const { closeDetails } = useCloseDetails();
+  const { isLight } = useTheme();
 
   const listData = useAppSelector((state) => state.list);
   const favorite = useAppSelector((state) => state.favorite);
@@ -64,7 +66,7 @@ export function List() {
 
   return (
     <ul
-      className={styles.list}
+      className={isLight ? styles.list : `${styles.list} ${styles.dark}`}
       role="presentation"
       onClick={(e) => {
         if (e.target === e.currentTarget) closeDetails();

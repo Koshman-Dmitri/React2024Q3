@@ -9,10 +9,18 @@
   overflow-y: auto;
 }
 
+.list.dark {
+  border-color: rgba(255, 215, 0, 0.9);
+}
+
 .link {
   display: block;
   padding: 10px 0 10px 7rem;
   border-top: 2px solid aqua;
+}
+
+.list.dark .link {
+  border-color: darkmagenta;
 }
 
 .listElement {
@@ -24,6 +32,10 @@
 
 .listElement + .listElement {
   box-shadow: 0 0 4px aqua;
+}
+
+.list.dark .listElement + .listElement {
+  box-shadow: 0 0 5px darkmagenta;
 }
 
 .valueText {
@@ -55,9 +67,18 @@
   outline: 2px solid white;
 }
 
+.list.dark .checkBox:checked {
+  accent-color: black;
+  outline: 2px solid rgba(255, 215, 0, 0.9);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .listElement:hover {
     background-color: goldenrod;
+  }
+
+  .list.dark .listElement:hover {
+    background-color: black;
   }
 }
 
