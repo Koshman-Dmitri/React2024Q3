@@ -37,7 +37,7 @@ export function Main() {
           }
         }
       })
-      .catch(() => console.log('error'));
+      .catch(() => console.error('API unavailable now'));
   }, [queryParams, search, dispatch, searchForObject, setQueryParams]);
 
   const hasDetails = queryParams.has('details');

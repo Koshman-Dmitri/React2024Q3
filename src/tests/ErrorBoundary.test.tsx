@@ -1,12 +1,12 @@
 import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouter } from './utils/utils';
+import { renderWithProviders } from './utils/utils';
 import { ErrorBoundary, TestErrorComponent } from '../components';
 import '@testing-library/jest-dom';
 
 describe('ErrorBoundary', () => {
   test('Should not render on init', () => {
-    renderWithRouter(
+    renderWithProviders(
       <ErrorBoundary>
         <TestErrorComponent />
       </ErrorBoundary>
@@ -21,7 +21,7 @@ describe('ErrorBoundary', () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
     await act(() =>
-      renderWithRouter(
+      renderWithProviders(
         <ErrorBoundary>
           <TestErrorComponent />
         </ErrorBoundary>
@@ -38,7 +38,7 @@ describe('ErrorBoundary', () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
     await act(() =>
-      renderWithRouter(
+      renderWithProviders(
         <ErrorBoundary>
           <TestErrorComponent />
         </ErrorBoundary>

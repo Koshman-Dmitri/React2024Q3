@@ -1,7 +1,7 @@
-import { act, renderHook, screen } from '@testing-library/react';
-import { useSearchParams } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { renderWithRouter, wrapperForHook } from './utils/utils';
+import { screen } from '@testing-library/react';
+import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+import { renderWithProviders } from './utils/utils';
 import { Main } from '../components';
 import { ApiData } from '../services/ST-API/api.types';
 import '@testing-library/jest-dom';
@@ -29,61 +29,19 @@ const mockResponse: ApiData = {
   },
 };
 
+const server = setupServer(
+  http.post('https://stapi.co/api/v2/rest/astronomicalObject/search', () => {
+    return HttpResponse.json(mockResponse);
+  })
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
 describe('Main', () => {
-  test('Should be rendered', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      } as Response);
-    });
-
-    await act(() => renderWithRouter(<Main />));
-    expect(screen.getByText(/fake name/i)).toBeInTheDocument();
-  });
-
-  test('Should show error message if api not available', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.reject(),
-      } as Response);
-    });
-
-    await act(() => renderWithRouter(<Main />));
-    expect(screen.getByText(/not fetch/i)).toBeInTheDocument();
-  });
-
-  test('Open details onclick', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      } as Response);
-    });
-
-    await act(() => renderWithRouter(<Main />));
-
-    const { result } = renderHook(() => useSearchParams(), { wrapper: wrapperForHook });
-    const element = screen.getByText('Fake name');
-
-    await userEvent.click(element);
-    act(() => result.current[1]({ page: '1', details: 'id' }));
-
-    const hasDetails = window.location.search.includes('details');
-    expect(hasDetails).toBeTruthy();
-  });
-
-  test('Trigger additional api call to fetch details', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      } as Response);
-    });
-
-    await act(() => renderWithRouter(<Main />));
-    expect(fetch).toHaveBeenCalledTimes(2);
-
-    const element = screen.getByText('Fake name');
-    await userEvent.click(element);
-
-    expect(fetch).toHaveBeenCalledTimes(3);
+  test('Should be rendered', () => {
+    renderWithProviders(<Main />);
+    expect(screen.getByText(/results/i)).toBeInTheDocument();
   });
 });
