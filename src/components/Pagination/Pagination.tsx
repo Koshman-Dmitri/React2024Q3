@@ -1,15 +1,21 @@
 import { useSearchParams } from 'react-router-dom';
-import { PaginationProps } from './Pagination.types';
+import { useAppSelector } from '../../hooks/reduxHooks';
+import { useTheme } from '../../hooks/useTheme';
 import styles from './Pagination.module.css';
 
-export function Pagination({ isFirstPage, isLastPage, currentPage, totalPages }: PaginationProps) {
+export function Pagination() {
   const [queryParams, setQueryParams] = useSearchParams();
+  const { isLight } = useTheme();
 
-  const showCurPage = totalPages ? currentPage + 1 : 0;
+  const { firstPage, lastPage, pageNumber, totalPages } = useAppSelector(
+    (state) => state.pagination
+  );
+
+  const showCurPage = totalPages ? pageNumber + 1 : 0;
   const page = Number(queryParams.get('page'));
 
   return (
-    <div className={styles.pagination}>
+    <div className={isLight ? styles.pagination : `${styles.pagination} ${styles.dark}`}>
       <p className={styles.pageCounter}>
         Page: {showCurPage}/{totalPages}
       </p>
@@ -18,7 +24,7 @@ export function Pagination({ isFirstPage, isLastPage, currentPage, totalPages }:
           <button
             className={styles.button}
             type="button"
-            disabled={isFirstPage || currentPage >= totalPages}
+            disabled={firstPage || pageNumber >= totalPages}
             onClick={() => setQueryParams({ page: String(page - 1) })}
           >
             Prev
@@ -26,7 +32,7 @@ export function Pagination({ isFirstPage, isLastPage, currentPage, totalPages }:
           <button
             className={styles.button}
             type="button"
-            disabled={isLastPage || currentPage >= totalPages}
+            disabled={lastPage || pageNumber >= totalPages}
             onClick={() => setQueryParams({ page: String(page + 1) })}
           >
             Next

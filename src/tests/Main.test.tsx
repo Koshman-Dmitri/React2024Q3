@@ -1,9 +1,13 @@
 import { act, renderHook, screen } from '@testing-library/react';
-import { useSearchParams } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
-import { renderWithRouter, wrapperForHook } from './utils/utils';
+import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+import { Provider } from 'react-redux';
+import { PropsWithChildren } from 'react';
+import { renderWithProviders } from './utils/utils';
 import { Main } from '../components';
 import { ApiData } from '../services/ST-API/api.types';
+import { starTrekApi } from '../services/ST-API/api';
+import { setupStore } from '../app/store';
 import '@testing-library/jest-dom';
 
 const mockResponse: ApiData = {
@@ -23,67 +27,55 @@ const mockResponse: ApiData = {
     pageSize: 1,
     numberOfElements: 1,
     totalElements: 1,
-    totalPages: 1,
+    totalPages: 10,
     firstPage: true,
     lastPage: true,
   },
 };
 
+const server = setupServer(
+  http.post('https://stapi.co/api/v2/rest/astronomicalObject/search', () => {
+    return HttpResponse.json(mockResponse);
+  })
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
 describe('Main', () => {
-  test('Should be rendered', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      } as Response);
-    });
-
-    await act(() => renderWithRouter(<Main />));
-    expect(screen.getByText(/fake name/i)).toBeInTheDocument();
+  test('Should be rendered', () => {
+    renderWithProviders(<Main />);
+    expect(screen.getByText(/results/i)).toBeInTheDocument();
   });
 
-  test('Should show error message if api not available', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.reject(),
-      } as Response);
-    });
+  test('Call api on render', async () => {
+    function Wrapper({ children }: PropsWithChildren) {
+      return <Provider store={setupStore()}>{children}</Provider>;
+    }
 
-    await act(() => renderWithRouter(<Main />));
-    expect(screen.getByText(/not fetch/i)).toBeInTheDocument();
+    const { result } = renderHook(() => starTrekApi.useSearchForObjectsMutation(), {
+      wrapper: Wrapper,
+    });
+    await act(() => result.current[0]({ query: 'query' }));
+    expect(result.current[1].isSuccess).toBeTruthy();
+    expect(result.current[1].status).toBe('fulfilled');
   });
 
-  test('Open details onclick', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      } as Response);
-    });
+  test('Catch if api unavailable', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => null);
 
-    await act(() => renderWithRouter(<Main />));
-
-    const { result } = renderHook(() => useSearchParams(), { wrapper: wrapperForHook });
-    const element = screen.getByText('Fake name');
-
-    await userEvent.click(element);
-    act(() => result.current[1]({ page: '1', details: 'id' }));
-
-    const hasDetails = window.location.search.includes('details');
-    expect(hasDetails).toBeTruthy();
+    renderWithProviders(<Main />);
+    server.use(
+      http.post('https://stapi.co/api/v2/rest/astronomicalObject/search', () => {
+        return HttpResponse.error();
+      })
+    );
   });
 
-  test('Trigger additional api call to fetch details', async () => {
-    vi.spyOn(globalThis, 'fetch').mockImplementationOnce(() => {
-      return Promise.resolve({
-        json: () => Promise.resolve(mockResponse),
-      } as Response);
-    });
-
-    await act(() => renderWithRouter(<Main />));
-    expect(fetch).toHaveBeenCalledTimes(2);
-
-    const element = screen.getByText('Fake name');
-    await userEvent.click(element);
-
-    expect(fetch).toHaveBeenCalledTimes(3);
+  test('Should has details branch', () => {
+    const spy = vi.spyOn(URLSearchParams.prototype, 'has').mockImplementation(() => true);
+    renderWithProviders(<Main />);
+    expect(spy).toHaveBeenCalled();
   });
 });

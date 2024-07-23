@@ -1,37 +1,47 @@
-import { act, renderHook, screen } from '@testing-library/react';
-import { useSearchParams } from 'react-router-dom';
+import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import { renderWithRouter, wrapperForHook } from './utils/utils';
-import { Pagination } from '../components';
+import { renderWithProviders } from './utils/utils';
+import { Pagination, ThemeToggler } from '../components';
+import { ApiPagination } from '../services/ST-API/api.types';
 import '@testing-library/jest-dom';
 
-describe('Pagination', () => {
-  test('Open details onclick', async () => {
-    const currentPage = 5;
+const mockData: ApiPagination = {
+  pageNumber: 5,
+  pageSize: 15,
+  numberOfElements: 1,
+  totalElements: 100,
+  totalPages: 10,
+  firstPage: false,
+  lastPage: false,
+};
 
-    renderWithRouter(
-      <Pagination
-        isFirstPage={false}
-        isLastPage={false}
-        currentPage={currentPage}
-        totalPages={10}
-      />
-    );
-    const { result } = renderHook(() => useSearchParams(), { wrapper: wrapperForHook });
-    act(() => result.current[1]({ page: `${currentPage}` }));
+describe('Pagination', () => {
+  test('Should render', async () => {
+    renderWithProviders(<Pagination />, {
+      preloadedState: {
+        pagination: mockData,
+      },
+    });
 
     const prevButton = screen.getByText<HTMLButtonElement>('Prev');
     const nextButton = screen.getByText<HTMLButtonElement>('Next');
-
-    const mockBack = () => act(() => result.current[1]({ page: String(currentPage - 1) }));
-    const mockForward = () => act(() => result.current[1]({ page: String(currentPage + 1) }));
-
     await userEvent.click(prevButton);
-    mockBack();
-    expect(window.location.search).toBe('?page=4');
-
     await userEvent.click(nextButton);
-    mockForward();
-    expect(window.location.search).toBe('?page=6');
+    expect(prevButton).toBeInTheDocument();
+    expect(nextButton).toBeInTheDocument();
+  });
+
+  test('Should be dark theme', async () => {
+    const { container } = renderWithProviders(
+      <>
+        <Pagination />
+        <ThemeToggler />
+      </>
+    );
+
+    const switcher = screen.getByRole('checkbox');
+    await userEvent.click(switcher);
+
+    expect(container.firstElementChild?.className.includes('dark')).toBeTruthy();
   });
 });

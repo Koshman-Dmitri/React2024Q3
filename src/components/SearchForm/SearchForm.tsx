@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { lsAPI } from '../../services';
+import { useTheme } from '../../hooks/useTheme';
+import { lsAPI } from '../../services/LS-API/LS-API';
 import styles from './SearchForm.module.css';
 
 export function SearchForm() {
   const [lsValue, setLsValue] = useLocalStorage();
   const [value, setValue] = useState(lsValue || lsAPI.getData('prevSearch_KD'));
+  const { isLight } = useTheme();
   const navigate = useNavigate();
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>): void => {
@@ -18,8 +20,10 @@ export function SearchForm() {
     navigate(trimValue);
   };
 
+  const componentClassName = isLight ? styles.form : `${styles.form} ${styles.dark}`;
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={componentClassName} onSubmit={handleSubmit}>
       <label className={styles.label} htmlFor="search">
         Search astronomical object:
         <input

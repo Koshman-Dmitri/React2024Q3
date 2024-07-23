@@ -1,45 +1,35 @@
-import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
-import { api } from '../../services';
+import { useTheme } from '../../hooks/useTheme';
+import { starTrekApi } from '../../services/ST-API/api';
 import { Loader } from '../Loader/Loader';
-import { initDetailData } from '../Main/Main.consts';
-import { dummyState } from './DetailList.consts';
 import styles from './DetailList.module.css';
 
 export function DetailList() {
-  const [state, setState] = useState(initDetailData);
-  const [isLoader, setIsLoader] = useState(false);
-  const [queryParams] = useSearchParams();
   const { closeDetails } = useCloseDetails();
+  const { isLight } = useTheme();
 
-  useEffect(() => {
-    const details = queryParams.get('details') || '';
+  const [queryParams] = useSearchParams();
+  const details = queryParams.get('details') || '';
 
-    setIsLoader(true);
-    api
-      .getObject(details)
-      .then((data) => {
-        if (data.astronomicalObject) {
-          setState(data.astronomicalObject);
-        } else {
-          setState(dummyState);
-        }
-      })
-      .catch((error) => console.error(error))
-      .finally(() => setIsLoader(false));
-  }, [queryParams]);
+  const { data, isFetching } = starTrekApi.useGetObjectByIdQuery(details);
 
   return (
-    <div className={styles.details}>
-      {state.astronomicalObjectType && (
+    <div className={isLight ? styles.details : `${styles.details} ${styles.dark}`}>
+      {data && (
         <p>
-          Object type: <span className={styles.valueText}>{state.astronomicalObjectType}</span>
+          Object type:{' '}
+          <span className={styles.valueText}>
+            {data.astronomicalObject?.astronomicalObjectType || 'No such object'}
+          </span>
         </p>
       )}
-      {state.location && (
+      {data && (
         <p>
-          Location: <span className={styles.valueText}>{state.location.name}</span>
+          Location:{' '}
+          <span className={styles.valueText}>
+            {data.astronomicalObject?.location?.name || 'No such object'}
+          </span>
         </p>
       )}
       <button className={styles.closeBtn} type="button" onClick={closeDetails}>
@@ -49,7 +39,7 @@ export function DetailList() {
         &#128073;To close this panel click on Close Button or Left Panel. If left panel full of
         elements click on border to check closing
       </p>
-      {isLoader && <Loader />}
+      {isFetching && <Loader />}
     </div>
   );
 }

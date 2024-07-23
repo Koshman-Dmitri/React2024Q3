@@ -1,17 +1,44 @@
 import { Link, useSearchParams } from 'react-router-dom';
+import { ChangeEvent } from 'react';
 import { ApiElement } from '../../services/ST-API/api.types';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { useCloseDetails } from '../../hooks/useCloseDetails';
+import { useTheme } from '../../hooks/useTheme';
+import { addFavorite, deleteFavorite } from '../../app/slices/favoriteSlice';
 import styles from './List.module.css';
 
-export function List({ data, closeHandler }: { data: ApiElement[]; closeHandler: () => void }) {
+export function List() {
   const [queryParams, setQueryParams] = useSearchParams();
+  const { closeDetails } = useCloseDetails();
+  const { isLight } = useTheme();
+
+  const listData = useAppSelector((state) => state.list);
+  const favorite = useAppSelector((state) => state.favorite);
+  const dispatch = useAppDispatch();
 
   const handlerElementClick = (id: string): void => {
     const page = queryParams.get('page') || '';
     setQueryParams({ page, details: id });
   };
 
-  const listElements = data.length ? (
-    data.map((el) => {
+  const handlerFavoriteChange = (event: ChangeEvent<HTMLInputElement>, el: ApiElement): void => {
+    if (event.target.checked) {
+      let url = window.location.href;
+
+      if (!url.includes('detail?')) {
+        url = url.split('?').join(url.includes('/?') ? 'detail?' : '/detail?');
+      }
+
+      dispatch(addFavorite({ ...el, url }));
+    } else {
+      dispatch(deleteFavorite(el.uid));
+    }
+  };
+
+  const listElements = listData.length ? (
+    listData.map((el) => {
+      const isChecked = Boolean(favorite.find((fav) => fav.uid === el.uid));
+
       return (
         <li
           key={el.uid}
@@ -19,6 +46,12 @@ export function List({ data, closeHandler }: { data: ApiElement[]; closeHandler:
           role="presentation"
           onClick={() => handlerElementClick(el.uid)}
         >
+          <input
+            type="checkbox"
+            className={styles.checkBox}
+            checked={isChecked}
+            onChange={(event) => handlerFavoriteChange(event, el)}
+          />
           {el.name && (
             <Link to="detail" className={styles.link}>
               Name: <span className={styles.valueText}>{el.name}</span>
@@ -33,10 +66,10 @@ export function List({ data, closeHandler }: { data: ApiElement[]; closeHandler:
 
   return (
     <ul
-      className={styles.list}
+      className={isLight ? styles.list : `${styles.list} ${styles.dark}`}
       role="presentation"
       onClick={(e) => {
-        if (e.target === e.currentTarget) closeHandler();
+        if (e.target === e.currentTarget) closeDetails();
       }}
     >
       {listElements}

@@ -11,11 +11,19 @@
   background-color: darkcyan;
 }
 
+.pagination.dark .button {
+  background-color: slateblue;
+}
+
 .pageCounter {
   min-width: max-content;
   font-size: 2.4rem;
   font-weight: bold;
   color: white;
+}
+
+.pagination.dark .pageCounter {
+  color: gold;
 }
 
 @media (max-width: 768px) {

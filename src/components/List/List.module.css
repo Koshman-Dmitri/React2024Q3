@@ -9,13 +9,23 @@
   overflow-y: auto;
 }
 
+.list.dark {
+  border-color: rgba(255, 215, 0, 0.9);
+}
+
 .link {
   display: block;
-  padding: 10px;
+  padding: 10px 0 10px 7rem;
   border-top: 2px solid aqua;
 }
 
+.list.dark .link {
+  border-color: darkmagenta;
+}
+
 .listElement {
+  position: relative;
+  text-align: left;
   text-shadow: 0 0 4px black;
   cursor: pointer;
 }
@@ -24,8 +34,14 @@
   box-shadow: 0 0 4px aqua;
 }
 
+.list.dark .listElement + .listElement {
+  box-shadow: 0 0 5px darkmagenta;
+}
+
 .valueText {
   font-weight: 600;
+  text-align: left;
+  word-break: break-word;
   color: gold;
 }
 
@@ -36,8 +52,39 @@
   text-shadow: 0 0 4px red;
 }
 
+.checkBox {
+  position: absolute;
+  top: 50%;
+  left: 3rem;
+  transform: translateY(-50%);
+  width: 2.2rem;
+  height: 2.2rem;
+  cursor: pointer;
+}
+
+.checkBox:checked {
+  accent-color: darkcyan;
+  outline: 2px solid white;
+}
+
+.list.dark .checkBox:checked {
+  accent-color: black;
+  outline: 2px solid rgba(255, 215, 0, 0.9);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .listElement:hover {
     background-color: goldenrod;
+  }
+
+  .list.dark .listElement:hover {
+    background-color: black;
+  }
+}
+
+@media (max-width: 768px) {
+  .link {
+    flex-wrap: wrap;
+    gap: 10px;
   }
 }

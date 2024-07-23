@@ -1,0 +1,59 @@
+.toggler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 220px;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 0 0 4px black;
+}
+
+.input {
+  position: relative;
+  width: 100px;
+  height: 32px;
+  border: 2px solid white;
+  border-radius: 30px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-color: white;
+}
+
+.input::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: darkcyan;
+  transition:
+    background-color 0.3s ease-in-out,
+    transform 0.2s ease-in-out;
+}
+
+.input:checked::before {
+  transform: translateX(23px);
+  background-color: slateblue;
+}
+
+.textLight,
+.textDark {
+  transition: color 0.2s ease;
+}
+
+.textLight,
+.toggler.dark .textDark {
+  color: gold;
+  text-shadow: 0 0 4px white;
+}
+
+.toggler.dark .textLight {
+  color: white;
+}

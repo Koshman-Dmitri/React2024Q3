@@ -1,0 +1,94 @@
+.flyOut {
+  position: fixed;
+  bottom: -20%;
+  left: 50%;
+  z-index: 3000;
+  transform: translateX(-50%);
+  padding: 20px 30px;
+  max-width: 440px;
+  width: 100%;
+  font-size: 2rem;
+  text-shadow: 0 0 3px black;
+  border: 4px ridge black;
+  border-radius: 20px;
+  background-color: slategray;
+  color: black;
+  transition: bottom 0.2s ease-in-out;
+}
+
+.flyOut.dark {
+  color: white;
+  border-color: white;
+  background-color: indigo;
+}
+
+.flyOut.active {
+  bottom: 5%;
+}
+
+.title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.counter {
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 0 12px gold;
+}
+
+.flyOut.dark .counter {
+  color: gold;
+  text-shadow: 0 0 12px white;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonWrapper button {
+  width: fit-content;
+  font-size: 1.4rem;
+}
+
+.btnClear {
+  background-color: crimson;
+}
+
+.flyOut.dark .btnClear {
+  background-color: firebrick;
+}
+
+.btnDownload {
+  padding: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.linkDownload {
+  display: block;
+  padding: 10px;
+  border-radius: 7px;
+  background-color: darkcyan;
+  box-shadow: 1px 1px 2px black;
+  transition: opacity 0.2s ease-in;
+}
+
+.flyOut.dark .linkDownload {
+  background-color: slateblue;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .linkDownload:hover {
+    opacity: 0.75;
+  }
+}
+
+@media (max-width: 768px) {
+  .flyOut {
+    padding: 14px;
+    max-width: 280px;
+  }
+}

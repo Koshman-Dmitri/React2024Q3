@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { lsAPI } from '../services';
+import { lsAPI } from '../services/LS-API/LS-API';
 
 const initValue = lsAPI.getData('prevSearch_KD');
 
