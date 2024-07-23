@@ -5,7 +5,7 @@ export type ApiElement = {
   location: {
     uid: string;
     name: string;
-  };
+  } | null;
   url?: string;
 };
 

@@ -31,4 +31,19 @@ describe('createCsVHref', () => {
   test('Should return empty string if no arguments', () => {
     expect(createCsvHref([])).toBe('');
   });
+
+  test('Should return empty string if no arguments', () => {
+    const mockData = [
+      {
+        uid: '1',
+        name: 'One',
+        astronomicalObjectType: 'planet',
+        location: null,
+      },
+    ];
+
+    expect(createCsvHref(mockData)).toBe(
+      'data:text/csv;charset=utf-8,uid;name;astronomicalObjectType;location%0A1;One;planet;No%20info'
+    );
+  });
 });
