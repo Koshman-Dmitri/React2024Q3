@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet, useParams, useSearchParams } from 'react-router-dom';
 import { starTrekApi } from '../../services/ST-API/api';
 import { Loader } from '../Loader/Loader';
@@ -10,6 +10,8 @@ import { updateList } from '../../app/slices/listSlice';
 import styles from './Main.module.css';
 
 export function Main() {
+  const [prevPage, setPrevPage] = useState<number | null>(null);
+  const [prevSearch, setPrevSearch] = useState<string | undefined>(undefined);
   const [queryParams, setQueryParams] = useSearchParams();
   const { search } = useParams();
   const dispatch = useAppDispatch();
@@ -19,6 +21,15 @@ export function Main() {
   useEffect(() => {
     const page = Number(queryParams.get('page')) - 1;
     const hasDetails = queryParams.has('details');
+
+    if (prevSearch === search) {
+      if (prevPage === page) {
+        return;
+      }
+      setPrevPage(page);
+    } else {
+      setPrevSearch(search);
+    }
 
     searchForObject({ query: search || '', page })
       .unwrap()
@@ -38,7 +49,7 @@ export function Main() {
         }
       })
       .catch(() => console.error('API unavailable now'));
-  }, [queryParams, search, dispatch, searchForObject, setQueryParams]);
+  }, [queryParams, search, dispatch, searchForObject, setQueryParams, prevPage, prevSearch]);
 
   const hasDetails = queryParams.has('details');
 
