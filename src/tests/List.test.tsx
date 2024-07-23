@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
-import { List } from '../components';
+import { List, ThemeToggler } from '../components';
 import { ApiElement } from '../services/ST-API/api.types';
 import '@testing-library/jest-dom';
 
@@ -85,5 +85,19 @@ describe('List', () => {
     expect(elementName1).toBeInTheDocument();
     expect(elementName2).toBeInTheDocument();
     expect(elementName3).toBeInTheDocument();
+  });
+
+  test('Should be dark theme', async () => {
+    renderWithProviders(
+      <>
+        <ThemeToggler />
+        <List />
+      </>
+    );
+
+    const switcher = screen.getByRole('checkbox');
+    await userEvent.click(switcher);
+
+    expect(screen.getAllByRole('presentation')[0].className.includes('dark')).toBeTruthy();
   });
 });

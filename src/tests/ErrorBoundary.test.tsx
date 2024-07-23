@@ -34,7 +34,7 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText('Fallback message')).toBeInTheDocument();
   });
 
-  test('Should close onclick', async () => {
+  test('Should close on closeBtn', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
     await act(() =>
@@ -51,6 +51,26 @@ describe('ErrorBoundary', () => {
 
     const closeBtn = screen.getByText('Close');
     await userEvent.click(closeBtn);
+    expect(screen.queryByText('Fallback message')).not.toBeInTheDocument();
+  });
+
+  test('Should close on overlay click', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => null);
+
+    await act(() =>
+      renderWithProviders(
+        <ErrorBoundary>
+          <TestErrorComponent />
+        </ErrorBoundary>
+      )
+    );
+
+    const errorBtn = screen.getByText('Throw error');
+    await userEvent.click(errorBtn);
+    expect(screen.getByText('Fallback message')).toBeInTheDocument();
+
+    const overlay = screen.getByRole('presentation');
+    await userEvent.click(overlay);
     expect(screen.queryByText('Fallback message')).not.toBeInTheDocument();
   });
 });

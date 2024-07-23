@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
-import { Pagination } from '../components';
+import { Pagination, ThemeToggler } from '../components';
 import { ApiPagination } from '../services/ST-API/api.types';
 import '@testing-library/jest-dom';
 
@@ -29,5 +29,19 @@ describe('Pagination', () => {
     await userEvent.click(nextButton);
     expect(prevButton).toBeInTheDocument();
     expect(nextButton).toBeInTheDocument();
+  });
+
+  test('Should be dark theme', async () => {
+    const { container } = renderWithProviders(
+      <>
+        <Pagination />
+        <ThemeToggler />
+      </>
+    );
+
+    const switcher = screen.getByRole('checkbox');
+    await userEvent.click(switcher);
+
+    expect(container.firstElementChild?.className.includes('dark')).toBeTruthy();
   });
 });

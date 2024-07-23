@@ -26,5 +26,5 @@ export type ApiData = {
 
 export type SearchProps = {
   query: string;
-  page: number;
+  page?: number;
 };
