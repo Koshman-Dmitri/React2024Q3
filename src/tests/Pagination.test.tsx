@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
 import { Pagination, ThemeToggler } from '../components';
 import { ApiPagination } from '../services/ST-API/api.types';
-import '@testing-library/jest-dom';
 
 const mockData: ApiPagination = {
   pageNumber: 5,

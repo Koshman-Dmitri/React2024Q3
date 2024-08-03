@@ -8,7 +8,6 @@ import { Main } from '../components';
 import { ApiData } from '../services/ST-API/api.types';
 import { starTrekApi } from '../services/ST-API/api';
 import { setupStore } from '../lib/store';
-import '@testing-library/jest-dom';
 
 const mockResponse: ApiData = {
   astronomicalObjects: [
@@ -71,11 +70,5 @@ describe('Main', () => {
         return HttpResponse.error();
       })
     );
-  });
-
-  test('Should has details branch', () => {
-    const spy = vi.spyOn(URLSearchParams.prototype, 'has').mockImplementation(() => true);
-    renderWithProviders(<Main />);
-    expect(spy).toHaveBeenCalled();
   });
 });

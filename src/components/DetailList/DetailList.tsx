@@ -3,7 +3,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { ApiElement } from '../../services/ST-API/api.types';
 import styles from './DetailList.module.css';
 
-export function DetailList({ data }: { data: { astronomicalObject: ApiElement } }) {
+export function DetailList({ data }: { data: { astronomicalObject: ApiElement | undefined } }) {
   const { closeDetails } = useCloseDetails();
   const { isLight } = useTheme();
 

@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
 import { List, ThemeToggler } from '../components';
 import { ApiElement } from '../services/ST-API/api.types';
-import '@testing-library/jest-dom';
 
 const mockData: ApiElement[] = [
   {

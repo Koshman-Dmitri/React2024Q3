@@ -3,8 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { AppStore, RootState, setupStore } from '../../lib/store';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { AppStore, RootState } from '../../lib/store';
 import { ThemeProvider } from '../../context/ThemeContext';
+import { starTrekApi } from '../../services/ST-API/api';
+import listReducer from '../../lib/slices/listSlice';
+import paginationReducer from '../../lib/slices/paginationSlice';
+import favoriteReducer from '../../lib/slices/favoriteSlice';
 
 export const renderWithRouter = (component: ReactNode, { route = '/' } = {}) => {
   window.history.pushState({}, 'Test page', route);
@@ -23,6 +28,21 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
   store?: AppStore;
   route?: string;
+}
+
+const rootReducer = combineReducers({
+  list: listReducer,
+  pagination: paginationReducer,
+  favorite: favoriteReducer,
+  [starTrekApi.reducerPath]: starTrekApi.reducer,
+});
+
+function setupStore(preloadedState?: Partial<RootState>) {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(starTrekApi.middleware),
+    preloadedState,
+  });
 }
 
 export const renderWithProviders = (
