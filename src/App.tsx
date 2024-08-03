@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { PropsWithChildren } from 'react';
 import { useTheme } from './hooks/useTheme';
-import { ErrorBoundary, SearchForm, ThemeToggler } from './components';
+import { ErrorBoundary, Main, SearchForm, ThemeToggler } from './components';
 import { FlyOut } from './components/FlyOut/FlyOut';
 import styles from './App.module.css';
 
-function App() {
+function App({ children }: PropsWithChildren) {
   const { isLight } = useTheme();
 
   return (
@@ -13,7 +13,7 @@ function App() {
         <div className={styles.container}>
           <ThemeToggler />
           <SearchForm />
-          <Outlet />
+          <Main>{children}</Main>
           <FlyOut />
         </div>
       </div>

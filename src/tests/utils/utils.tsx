@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { AppStore, RootState, setupStore } from '../../app/store';
+import { AppStore, RootState, setupStore } from '../../lib/store';
 import { ThemeProvider } from '../../context/ThemeContext';
 
 export const renderWithRouter = (component: ReactNode, { route = '/' } = {}) => {

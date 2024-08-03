@@ -7,7 +7,7 @@ import { renderWithProviders } from './utils/utils';
 import { Main } from '../components';
 import { ApiData } from '../services/ST-API/api.types';
 import { starTrekApi } from '../services/ST-API/api';
-import { setupStore } from '../app/store';
+import { setupStore } from '../lib/store';
 import '@testing-library/jest-dom';
 
 const mockResponse: ApiData = {

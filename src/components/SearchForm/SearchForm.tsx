@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useTheme } from '../../hooks/useTheme';
 import { lsAPI } from '../../services/LS-API/LS-API';
@@ -7,9 +7,13 @@ import styles from './SearchForm.module.css';
 
 export function SearchForm() {
   const [lsValue, setLsValue] = useLocalStorage();
-  const [value, setValue] = useState(lsValue || lsAPI.getData('prevSearch_KD'));
+  const [value, setValue] = useState(lsValue);
   const { isLight } = useTheme();
-  const navigate = useNavigate();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!lsValue) setValue(lsAPI.getData('prevSearch_KD'));
+  }, [lsValue]);
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>): void => {
     e?.preventDefault();
@@ -17,7 +21,7 @@ export function SearchForm() {
 
     setValue(trimValue);
     setLsValue(trimValue);
-    navigate(trimValue);
+    router.push(`/${trimValue}?page=1`);
   };
 
   const componentClassName = isLight ? styles.form : `${styles.form} ${styles.dark}`;

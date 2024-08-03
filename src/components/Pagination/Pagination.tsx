@@ -1,15 +1,26 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './Pagination.module.css';
 
 export function Pagination() {
-  const [queryParams, setQueryParams] = useSearchParams();
+  const queryParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const { isLight } = useTheme();
 
   const { firstPage, lastPage, pageNumber, totalPages } = useAppSelector(
     (state) => state.pagination
   );
+
+  const createQuery = (page: string, details?: string): string => {
+    const params = new URLSearchParams();
+    params.set('page', page);
+    if (details) params.set('details', details);
+
+    return params.toString();
+  };
 
   const showCurPage = totalPages ? pageNumber + 1 : 0;
   const page = Number(queryParams.get('page'));
@@ -25,7 +36,9 @@ export function Pagination() {
             className={styles.button}
             type="button"
             disabled={firstPage || pageNumber >= totalPages}
-            onClick={() => setQueryParams({ page: String(page - 1) })}
+            onClick={() => {
+              router.push(`${pathname}?${createQuery(String(page - 1))}`.replace('detail', ''));
+            }}
           >
             Prev
           </button>
@@ -33,7 +46,9 @@ export function Pagination() {
             className={styles.button}
             type="button"
             disabled={lastPage || pageNumber >= totalPages}
-            onClick={() => setQueryParams({ page: String(page + 1) })}
+            onClick={() => {
+              router.push(`${pathname}?${createQuery(String(page + 1))}`.replace('detail', ''));
+            }}
           >
             Next
           </button>

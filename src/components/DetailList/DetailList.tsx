@@ -1,18 +1,11 @@
-import { useSearchParams } from 'react-router-dom';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
 import { useTheme } from '../../hooks/useTheme';
-import { starTrekApi } from '../../services/ST-API/api';
-import { Loader } from '../Loader/Loader';
+import { ApiElement } from '../../services/ST-API/api.types';
 import styles from './DetailList.module.css';
 
-export function DetailList() {
+export function DetailList({ data }: { data: { astronomicalObject: ApiElement } }) {
   const { closeDetails } = useCloseDetails();
   const { isLight } = useTheme();
-
-  const [queryParams] = useSearchParams();
-  const details = queryParams.get('details') || '';
-
-  const { data, isFetching } = starTrekApi.useGetObjectByIdQuery(details);
 
   return (
     <div className={isLight ? styles.details : `${styles.details} ${styles.dark}`}>
@@ -39,7 +32,6 @@ export function DetailList() {
         &#128073;To close this panel click on Close Button or Left Panel. If left panel full of
         elements click on border to check closing
       </p>
-      {isFetching && <Loader />}
     </div>
   );
 }

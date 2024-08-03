@@ -1,24 +1,38 @@
-import { Link, useSearchParams } from 'react-router-dom';
 import { ChangeEvent } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { ApiElement } from '../../services/ST-API/api.types';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
 import { useTheme } from '../../hooks/useTheme';
-import { addFavorite, deleteFavorite } from '../../app/slices/favoriteSlice';
+import { addFavorite, deleteFavorite } from '../../lib/slices/favoriteSlice';
 import styles from './List.module.css';
 
 export function List() {
-  const [queryParams, setQueryParams] = useSearchParams();
   const { closeDetails } = useCloseDetails();
   const { isLight } = useTheme();
+
+  const pathname = usePathname();
+  const queryParams = useSearchParams();
+  const router = useRouter();
 
   const listData = useAppSelector((state) => state.list);
   const favorite = useAppSelector((state) => state.favorite);
   const dispatch = useAppDispatch();
 
+  const createQuery = (page: string, details?: string): string => {
+    const params = new URLSearchParams();
+    params.set('page', page);
+    if (details) params.set('details', details);
+
+    return params.toString();
+  };
+
   const handlerElementClick = (id: string): void => {
-    const page = queryParams.get('page') || '';
-    setQueryParams({ page, details: id });
+    const page = queryParams.get('page') || '1';
+    const newPath = pathname.split('/')[1].replace('detail', '') || '';
+    const newRoute = `${newPath}/detail?${createQuery(page, id)}`;
+
+    router.push(newRoute);
   };
 
   const handlerFavoriteChange = (event: ChangeEvent<HTMLInputElement>, el: ApiElement): void => {
@@ -53,9 +67,9 @@ export function List() {
             onChange={(event) => handlerFavoriteChange(event, el)}
           />
           {el.name && (
-            <Link to="detail" className={styles.link}>
+            <span className={styles.link}>
               Name: <span className={styles.valueText}>{el.name}</span>
-            </Link>
+            </span>
           )}
         </li>
       );

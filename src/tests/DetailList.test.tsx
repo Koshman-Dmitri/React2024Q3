@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { setupStore } from '../app/store';
+import { setupStore } from '../lib/store';
 import { starTrekApi } from '../services/ST-API/api';
 import { renderWithProviders } from './utils/utils';
 import { DetailList } from '../components';
