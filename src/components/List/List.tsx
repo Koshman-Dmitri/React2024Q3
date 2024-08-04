@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { ApiElement } from '../../services/ST-API/api.types';

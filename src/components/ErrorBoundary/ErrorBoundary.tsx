@@ -1,3 +1,5 @@
+'use client';
+
 import { Component, ErrorInfo, MouseEvent, ReactNode } from 'react';
 import styles from './ErrorBoundary.module.css';
 

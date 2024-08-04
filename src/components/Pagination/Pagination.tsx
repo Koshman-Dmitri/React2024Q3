@@ -1,3 +1,5 @@
+'use client';
+
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './Pagination.module.css';

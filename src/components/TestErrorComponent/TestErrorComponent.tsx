@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './TestErrorComponent.module.css';
