@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest run --coverage",
-    "lint": "eslint . --ext ts,tsx",
+    "lint": "next lint",
     "format:fix": "prettier . --write ",
     "prepare": "husky ./.husky"
   },
@@ -22,6 +22,7 @@
     "react-router-dom": "^6.26.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.5",
     "@testing-library/dom": "^10.3.1",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
