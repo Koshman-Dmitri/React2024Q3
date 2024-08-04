@@ -1,3 +1,5 @@
+'use client';
+
 import { PropsWithChildren } from 'react';
 import { useTheme } from './hooks/useTheme';
 import { ErrorBoundary, SearchForm, ThemeToggler } from './components';

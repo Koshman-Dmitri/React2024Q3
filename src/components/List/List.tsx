@@ -29,7 +29,7 @@ export function List({ listData }: { listData: ApiElement[] }) {
   const handlerElementClick = (id: string): void => {
     const page = queryParams.get('page') || '1';
     const newPath = pathname.split('/')[1].replace('detail', '') || '';
-    const newRoute = `${newPath}/detail?${createQuery(page, id)}`;
+    const newRoute = `${newPath && '/'}${newPath}/detail?${createQuery(page, id)}`;
 
     router.push(newRoute);
   };

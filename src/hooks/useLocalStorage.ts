@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { lsAPI } from '../services/LS-API/LS-API';
 
-let isFirst = true;
+let isFirst = 0;
 
 export const useLocalStorage = (): readonly [
   string,
@@ -15,8 +15,8 @@ export const useLocalStorage = (): readonly [
   }, []);
 
   useEffect(() => {
-    if (isFirst) {
-      isFirst = false;
+    if (isFirst < 2) {
+      isFirst += 1;
     } else {
       setValue(value);
       lsAPI.setData('prevSearch_KD', value);
