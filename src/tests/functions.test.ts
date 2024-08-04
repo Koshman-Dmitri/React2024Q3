@@ -1,4 +1,5 @@
 import { createCsvHref } from '../utils/createCsvHref';
+import { makePageQuery } from '../utils/makePageQuery';
 
 describe('createCsVHref', () => {
   test('Should make csv format', () => {
@@ -44,6 +45,26 @@ describe('createCsVHref', () => {
 
     expect(createCsvHref(mockData)).toBe(
       'data:text/csv;charset=utf-8,uid;name;astronomicalObjectType;location%0A1;One;planet;No%20info'
+    );
+  });
+});
+
+describe('makePageQuery', () => {
+  test('Should return right', () => {
+    expect(makePageQuery({ params: { slug: 'string' }, searchParams: { page: 'page' } })).toEqual({
+      details: undefined,
+      page: 0,
+      query: 's',
+    });
+  });
+
+  test('Should return right if has details', () => {
+    expect(makePageQuery({ params: { slug: ['detail'] }, searchParams: { page: 'page' } })).toEqual(
+      {
+        details: undefined,
+        page: 0,
+        query: '',
+      }
     );
   });
 });

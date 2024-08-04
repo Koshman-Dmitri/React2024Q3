@@ -1,5 +1,5 @@
 export type SearchParams = {
-  params: { slug: string };
+  params: { slug: string } | { slug: string[] };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
