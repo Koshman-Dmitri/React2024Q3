@@ -1,9 +1,12 @@
-import { DetailList } from '../components';
-import { ApiElement } from '../services/ST-API/api.types';
-import { gSSP } from '../utils/gSSP';
+import { DetailList, Main } from '../components';
+import { gSSP, RenderProps } from '../utils/gSSP';
 
 export const getServerSideProps = gSSP;
 
-export default function Page({ detailData }: { detailData: { astronomicalObject: ApiElement } }) {
-  return detailData && <DetailList data={detailData} />;
+export default function Page({ listProps, paginationProps, detailData }: RenderProps) {
+  return (
+    <Main listProps={listProps} paginationProps={paginationProps}>
+      {detailData && <DetailList data={detailData} />}
+    </Main>
+  );
 }

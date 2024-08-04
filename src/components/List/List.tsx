@@ -7,7 +7,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { addFavorite, deleteFavorite } from '../../lib/slices/favoriteSlice';
 import styles from './List.module.css';
 
-export function List() {
+export function List({ listData }: { listData: ApiElement[] }) {
   const { closeDetails } = useCloseDetails();
   const { isLight } = useTheme();
 
@@ -15,7 +15,6 @@ export function List() {
   const queryParams = useSearchParams();
   const router = useRouter();
 
-  const listData = useAppSelector((state) => state.list);
   const favorite = useAppSelector((state) => state.favorite);
   const dispatch = useAppDispatch();
 

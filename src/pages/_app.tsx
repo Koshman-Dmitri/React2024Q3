@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '../context/ThemeContext';
@@ -10,14 +11,19 @@ export function MyApp({ Component, pageProps }: AppProps) {
   const { store } = wrapper.useWrappedStore(pageProps);
 
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <App>
-          <Spinner />
-          <Component {...pageProps} />
-        </App>
-      </ThemeProvider>
-    </Provider>
+    <>
+      <Head>
+        <title>STAPI</title>
+      </Head>
+      <Provider store={store}>
+        <ThemeProvider>
+          <App>
+            <Spinner />
+            <Component {...pageProps} />
+          </App>
+        </ThemeProvider>
+      </Provider>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { useTheme } from './hooks/useTheme';
-import { ErrorBoundary, Main, SearchForm, ThemeToggler } from './components';
+import { ErrorBoundary, SearchForm, ThemeToggler } from './components';
 import { FlyOut } from './components/FlyOut/FlyOut';
 import styles from './App.module.css';
 
@@ -13,7 +13,7 @@ function App({ children }: PropsWithChildren) {
         <div className={styles.container}>
           <ThemeToggler />
           <SearchForm />
-          <Main>{children}</Main>
+          {children}
           <FlyOut />
         </div>
       </div>

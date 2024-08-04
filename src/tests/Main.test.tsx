@@ -44,7 +44,11 @@ afterAll(() => server.close());
 
 describe('Main', () => {
   test('Should be rendered', () => {
-    renderWithProviders(<Main />);
+    renderWithProviders(
+      <Main listProps={[]} paginationProps={mockResponse.page}>
+        <h1>test</h1>
+      </Main>
+    );
     expect(screen.getByText(/results/i)).toBeInTheDocument();
   });
 
@@ -64,7 +68,11 @@ describe('Main', () => {
   test('Catch if api unavailable', () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
-    renderWithProviders(<Main />);
+    renderWithProviders(
+      <Main listProps={[]} paginationProps={mockResponse.page}>
+        <h1>test</h1>
+      </Main>
+    );
     server.use(
       http.post('https://stapi.co/api/v2/rest/astronomicalObject/search', () => {
         return HttpResponse.error();

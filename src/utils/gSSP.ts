@@ -1,7 +1,12 @@
-import { updateList } from '../lib/slices/listSlice';
-import { updatePagination } from '../lib/slices/paginationSlice';
 import { wrapper } from '../lib/store';
 import { starTrekApi } from '../services/ST-API/api';
+import { ApiElement, ApiPagination } from '../services/ST-API/api.types';
+
+export interface RenderProps {
+  listProps: ApiElement[];
+  paginationProps: ApiPagination;
+  detailData: { astronomicalObject: ApiElement };
+}
 
 export const gSSP = wrapper.getServerSideProps((store) => async (context) => {
   let newQuery = context.query.search ? context.query.search[0] : '';
@@ -12,11 +17,6 @@ export const gSSP = wrapper.getServerSideProps((store) => async (context) => {
     starTrekApi.endpoints.searchForObjects.initiate({ query: newQuery, page: newPage })
   );
 
-  if (data) {
-    store.dispatch(updatePagination(data.page));
-    store.dispatch(updateList(data.astronomicalObjects));
-  }
-
   let detailData = null;
   if (context.query.details) {
     const newDetail = context.query.details as string;
@@ -26,6 +26,8 @@ export const gSSP = wrapper.getServerSideProps((store) => async (context) => {
 
   return {
     props: {
+      listProps: data?.astronomicalObjects,
+      paginationProps: data?.page,
       detailData,
     },
   };

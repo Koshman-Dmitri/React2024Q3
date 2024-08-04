@@ -16,11 +16,7 @@ const mockData: ApiPagination = {
 
 describe('Pagination', () => {
   test('Should render', async () => {
-    renderWithProviders(<Pagination />, {
-      preloadedState: {
-        pagination: mockData,
-      },
-    });
+    renderWithProviders(<Pagination paginationProps={mockData} />);
 
     const prevButton = screen.getByText<HTMLButtonElement>('Prev');
     const nextButton = screen.getByText<HTMLButtonElement>('Next');
@@ -33,7 +29,7 @@ describe('Pagination', () => {
   test('Should be dark theme', async () => {
     const { container } = renderWithProviders(
       <>
-        <Pagination />
+        <Pagination paginationProps={mockData} />
         <ThemeToggler />
       </>
     );

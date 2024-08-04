@@ -1,18 +1,16 @@
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { useAppSelector } from '../../hooks/reduxHooks';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './Pagination.module.css';
+import { ApiPagination } from '../../services/ST-API/api.types';
 
-export function Pagination() {
+export function Pagination({ paginationProps }: { paginationProps: ApiPagination }) {
   const queryParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
 
   const { isLight } = useTheme();
 
-  const { firstPage, lastPage, pageNumber, totalPages } = useAppSelector(
-    (state) => state.pagination
-  );
+  const { firstPage, lastPage, pageNumber, totalPages } = paginationProps;
 
   const createQuery = (page: string, details?: string): string => {
     const params = new URLSearchParams();

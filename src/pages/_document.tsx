@@ -5,7 +5,6 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <title>STAPI</title>
       </Head>
       <body>
         <Main />
