@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build": "tsc -b remix build",
+    "build": "remix build",
     "dev": "remix dev",
     "start": "remix-serve build/index.js",
     "test": "vitest run --coverage",
