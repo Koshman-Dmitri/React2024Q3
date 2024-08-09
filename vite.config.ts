@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import checker from 'vite-plugin-checker';
 import react from '@vitejs/plugin-react';
+import { vitePlugin as remix } from '@remix-run/dev';
 
 export default defineConfig(({ mode }) => ({
   define: {
@@ -8,6 +9,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
+    remix(),
     mode !== 'test' &&
       checker({
         typescript: true,

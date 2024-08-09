@@ -1,5 +1,6 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from '@remix-run/react';
 import { ChangeEvent } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { ApiElement } from '../../services/ST-API/api.types';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useCloseDetails } from '../../hooks/useCloseDetails';
@@ -7,12 +8,11 @@ import { useTheme } from '../../hooks/useTheme';
 import { addFavorite, deleteFavorite } from '../../app/slices/favoriteSlice';
 import styles from './List.module.css';
 
-export function List() {
+export function List({ listData }: { listData: ApiElement[] }) {
   const [queryParams, setQueryParams] = useSearchParams();
   const { closeDetails } = useCloseDetails();
   const { isLight } = useTheme();
 
-  const listData = useAppSelector((state) => state.list);
   const favorite = useAppSelector((state) => state.favorite);
   const dispatch = useAppDispatch();
 

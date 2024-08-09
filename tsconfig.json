@@ -7,7 +7,12 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["vitest/globals"],
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest/globals", "@remix-run/node", "vite/client"],
+    "paths": {
+      "~/*": ["./app/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -24,5 +29,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vite.config.ts", ".eslintrc.cjs"]
+  "include": ["src", "app", "vite.config.ts", "remix.env.d.ts", ".eslintrc.cjs"]
 }

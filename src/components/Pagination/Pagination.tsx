@@ -1,15 +1,13 @@
 import { useSearchParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/reduxHooks';
 import { useTheme } from '../../hooks/useTheme';
+import { ApiPagination } from '../../services/ST-API/api.types';
 import styles from './Pagination.module.css';
 
-export function Pagination() {
+export function Pagination({ paginationProps }: { paginationProps: ApiPagination }) {
   const [queryParams, setQueryParams] = useSearchParams();
   const { isLight } = useTheme();
 
-  const { firstPage, lastPage, pageNumber, totalPages } = useAppSelector(
-    (state) => state.pagination
-  );
+  const { firstPage, lastPage, pageNumber, totalPages } = paginationProps;
 
   const showCurPage = totalPages ? pageNumber + 1 : 0;
   const page = Number(queryParams.get('page'));

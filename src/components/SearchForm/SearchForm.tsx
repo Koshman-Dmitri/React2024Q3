@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useTheme } from '../../hooks/useTheme';
@@ -7,9 +7,13 @@ import styles from './SearchForm.module.css';
 
 export function SearchForm() {
   const [lsValue, setLsValue] = useLocalStorage();
-  const [value, setValue] = useState(lsValue || lsAPI.getData('prevSearch_KD'));
+  const [value, setValue] = useState(lsValue);
   const { isLight } = useTheme();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!lsValue) setValue(lsAPI.getData('prevSearch_KD'));
+  }, [lsValue]);
 
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>): void => {
     e?.preventDefault();
