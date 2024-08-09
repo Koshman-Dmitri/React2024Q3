@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
 import { Pagination, ThemeToggler } from '../components';
 import { ApiPagination } from '../services/ST-API/api.types';
-import '@testing-library/jest-dom';
 
 const mockData: ApiPagination = {
   pageNumber: 5,
@@ -17,7 +16,7 @@ const mockData: ApiPagination = {
 
 describe('Pagination', () => {
   test('Should render', async () => {
-    renderWithProviders(<Pagination />, {
+    renderWithProviders(<Pagination paginationProps={mockData} />, {
       preloadedState: {
         pagination: mockData,
       },
@@ -34,7 +33,7 @@ describe('Pagination', () => {
   test('Should be dark theme', async () => {
     const { container } = renderWithProviders(
       <>
-        <Pagination />
+        <Pagination paginationProps={mockData} />
         <ThemeToggler />
       </>
     );

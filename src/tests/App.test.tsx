@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
 import App from '../App';
-import '@testing-library/jest-dom';
 
 describe('App', () => {
   test('Should be rendered', () => {

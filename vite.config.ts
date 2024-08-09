@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    remix(),
+    mode !== 'test' && remix(),
     mode !== 'test' &&
       checker({
         typescript: true,

@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './utils/utils';
 import { List, ThemeToggler } from '../components';
 import { ApiElement } from '../services/ST-API/api.types';
-import '@testing-library/jest-dom';
 
 const mockData: ApiElement[] = [
   {
@@ -37,29 +36,21 @@ const mockData: ApiElement[] = [
 
 describe('List', () => {
   test('Should rendered specified numbers of elements', () => {
-    renderWithProviders(<List />, {
-      preloadedState: {
-        list: mockData,
-      },
-    });
+    renderWithProviders(<List listData={mockData} />);
 
     const list = screen.getAllByRole('presentation')[0];
     expect(list.childElementCount).toBe(3);
   });
 
   test('Should display message if no data', () => {
-    renderWithProviders(<List />);
+    renderWithProviders(<List listData={[]} />);
 
     const message = screen.getByText(/No results/i);
     expect(message).toBeInTheDocument();
   });
 
   test('Call handlers', async () => {
-    renderWithProviders(<List />, {
-      preloadedState: {
-        list: mockData,
-      },
-    });
+    renderWithProviders(<List listData={mockData} />);
 
     const list = screen.getAllByRole('presentation');
     await userEvent.click(list[0]);
@@ -73,11 +64,7 @@ describe('List', () => {
   });
 
   test('Render relevant data', () => {
-    renderWithProviders(<List />, {
-      preloadedState: {
-        list: mockData,
-      },
-    });
+    renderWithProviders(<List listData={mockData} />);
 
     const elementName1 = screen.getByText('One');
     const elementName2 = screen.getByText('Two');
@@ -91,7 +78,7 @@ describe('List', () => {
     renderWithProviders(
       <>
         <ThemeToggler />
-        <List />
+        <List listData={[]} />
       </>
     );
 
