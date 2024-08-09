@@ -1,8 +1,7 @@
 import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { SearchForm } from '../components';
+import { SearchForm, ThemeToggler } from '../components';
 import { renderWithProviders } from './utils/utils';
-import '@testing-library/jest-dom';
 
 describe('SearchForm', () => {
   test('Should be rendered', () => {
@@ -24,12 +23,17 @@ describe('SearchForm', () => {
     expect(input.value).toBe(JSON.parse(localStorage.getItem('prevSearch_KD')!));
   });
 
-  test('Get value from LS on mounting', () => {
-    const mockValue = 'Test';
-    localStorage.setItem('prevSearch_KD', JSON.stringify(mockValue));
-    renderWithProviders(<SearchForm />);
+  test('Should be dark theme', async () => {
+    const { container } = renderWithProviders(
+      <>
+        <ThemeToggler />
+        <SearchForm />
+      </>
+    );
 
-    const input = screen.getByLabelText<HTMLInputElement>('Search astronomical object:');
-    expect(input.value).toBe(mockValue);
+    const switcher = screen.getByRole('checkbox');
+    await userEvent.click(switcher);
+
+    expect(container.firstElementChild?.className.includes('dark')).toBeTruthy();
   });
 });

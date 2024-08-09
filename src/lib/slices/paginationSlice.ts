@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 import { ApiPagination } from '../../services/ST-API/api.types';
+
+interface PayloadPagination {
+  pagination: ApiPagination;
+}
 
 const initialState: ApiPagination = {
   pageNumber: 0,
@@ -18,6 +23,12 @@ const paginationSlice = createSlice({
     updatePagination: (_, action: PayloadAction<ApiPagination>) => {
       return action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (_, action) => {
+      const { payload } = action as PayloadAction<PayloadPagination>;
+      return payload.pagination;
+    });
   },
 });
 

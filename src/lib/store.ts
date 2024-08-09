@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { createWrapper } from 'next-redux-wrapper';
 import { starTrekApi } from '../services/ST-API/api';
 import listReducer from './slices/listSlice';
 import paginationReducer from './slices/paginationSlice';
@@ -11,14 +12,15 @@ const rootReducer = combineReducers({
   [starTrekApi.reducerPath]: starTrekApi.reducer,
 });
 
-export function setupStore(preloadedState?: Partial<RootState>) {
+export function setupStore() {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(starTrekApi.middleware),
-    preloadedState,
   });
 }
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
+
+export const wrapper = createWrapper<AppStore>(setupStore);

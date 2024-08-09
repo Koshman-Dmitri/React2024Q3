@@ -1,4 +1,4 @@
-import { clearFavorite } from '../../app/slices/favoriteSlice';
+import { clearFavorite } from '../../lib/slices/favoriteSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { useTheme } from '../../hooks/useTheme';
 import { createCsvHref } from '../../utils/createCsvHref';

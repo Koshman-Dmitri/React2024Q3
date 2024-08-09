@@ -1,11 +1,10 @@
 import { screen } from '@testing-library/react';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { setupStore } from '../app/store';
+import { setupStore } from '../lib/store';
 import { starTrekApi } from '../services/ST-API/api';
 import { renderWithProviders } from './utils/utils';
 import { DetailList } from '../components';
-import '@testing-library/jest-dom';
 
 const store = setupStore();
 
@@ -32,20 +31,14 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe('Detail List', () => {
-  test('Show loader on fetching', () => {
-    renderWithProviders(<DetailList />);
-    const loader = screen.getByTestId('loader');
-    expect(loader).toBeInTheDocument();
-  });
-
   test('Correctly display valid data', async () => {
-    renderWithProviders(<DetailList />);
+    renderWithProviders(<DetailList data={mockResponse} />);
     const testElement = await screen.findByText('Fake type');
     expect(testElement).toBeInTheDocument();
   });
 
   test('Close on click', () => {
-    renderWithProviders(<DetailList />);
+    renderWithProviders(<DetailList data={mockResponse} />);
     const closeBtn = screen.getByText('Close');
     expect(closeBtn).toBeInTheDocument();
   });
@@ -59,7 +52,7 @@ describe('Detail List', () => {
       })
     );
 
-    renderWithProviders(<DetailList />);
+    renderWithProviders(<DetailList data={{ astronomicalObject: undefined }} />);
     const todoElement = await screen.findAllByText('No such object');
     expect(todoElement[0]).toBeInTheDocument();
   });

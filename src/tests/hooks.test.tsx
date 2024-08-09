@@ -3,14 +3,25 @@ import userEvent from '@testing-library/user-event';
 import { useCloseDetails } from '../hooks/useCloseDetails';
 import { renderWithProviders, renderWithRouter, wrapperForHook } from './utils/utils';
 import { DetailList } from '../components';
-import '@testing-library/jest-dom';
+
+const mockData = {
+  astronomicalObject: {
+    uid: 'uid',
+    name: 'name',
+    astronomicalObjectType: 'astronomicalObjectType',
+    location: {
+      uid: 'uid',
+      name: 'name',
+    },
+  },
+};
 
 describe('useCloseDetails', () => {
   test('Should be called', async () => {
     const { result } = renderHook(() => useCloseDetails(), { wrapper: wrapperForHook });
     const spy = vi.spyOn(result.current, 'closeDetails');
 
-    renderWithProviders(<DetailList />);
+    renderWithProviders(<DetailList data={mockData} />);
     await userEvent.click(screen.getByText('Close'));
     expect(spy).toBeDefined();
   });
@@ -19,6 +30,6 @@ describe('useCloseDetails', () => {
 describe('useTheme', () => {
   test('Should throw error if used outside provider', () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
-    expect(() => renderWithRouter(<DetailList />)).toThrowError();
+    expect(() => renderWithRouter(<DetailList data={mockData} />)).toThrowError();
   });
 });

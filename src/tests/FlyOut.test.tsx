@@ -2,7 +2,6 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from './utils/utils';
 import { FlyOut } from '../components/FlyOut/FlyOut';
-import '@testing-library/jest-dom';
 import { ThemeToggler } from '../components';
 
 const mockData = [

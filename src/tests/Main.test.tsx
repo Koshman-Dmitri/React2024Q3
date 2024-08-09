@@ -7,8 +7,7 @@ import { renderWithProviders } from './utils/utils';
 import { Main } from '../components';
 import { ApiData } from '../services/ST-API/api.types';
 import { starTrekApi } from '../services/ST-API/api';
-import { setupStore } from '../app/store';
-import '@testing-library/jest-dom';
+import { setupStore } from '../lib/store';
 
 const mockResponse: ApiData = {
   astronomicalObjects: [
@@ -45,7 +44,11 @@ afterAll(() => server.close());
 
 describe('Main', () => {
   test('Should be rendered', () => {
-    renderWithProviders(<Main />);
+    renderWithProviders(
+      <Main listProps={[]} paginationProps={mockResponse.page}>
+        <h1>test</h1>
+      </Main>
+    );
     expect(screen.getByText(/results/i)).toBeInTheDocument();
   });
 
@@ -65,17 +68,15 @@ describe('Main', () => {
   test('Catch if api unavailable', () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
-    renderWithProviders(<Main />);
+    renderWithProviders(
+      <Main listProps={[]} paginationProps={mockResponse.page}>
+        <h1>test</h1>
+      </Main>
+    );
     server.use(
       http.post('https://stapi.co/api/v2/rest/astronomicalObject/search', () => {
         return HttpResponse.error();
       })
     );
-  });
-
-  test('Should has details branch', () => {
-    const spy = vi.spyOn(URLSearchParams.prototype, 'has').mockImplementation(() => true);
-    renderWithProviders(<Main />);
-    expect(spy).toHaveBeenCalled();
   });
 });

@@ -2,7 +2,6 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from './utils/utils';
 import { ThemeToggler } from '../components';
-import '@testing-library/jest-dom';
 
 describe('ThemeToggler', () => {
   test('Should be rendered', () => {

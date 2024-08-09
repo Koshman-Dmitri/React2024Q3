@@ -37,6 +37,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-console': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'react/jsx-props-no-spreading': 'off',
     'react-compiler/react-compiler': 'error',
   },
 };
