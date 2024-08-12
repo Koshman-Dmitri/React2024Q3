@@ -1,7 +1,13 @@
+import { Link } from 'react-router-dom';
 import styles from './App.module.css';
 
 function App() {
-  return <h1 className={styles.title}>Hello world!</h1>;
+  return (
+    <nav className={styles.nav}>
+      <Link to="/react-hook-form">React Hook Form</Link>
+      <Link to="/uncontrolled-form">React Hook Form</Link>
+    </nav>
+  );
 }
 
 export default App;

@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App';
 import './index.css';
+
+import App from './App';
+import ErrorPage from './components/ErrorPage/ErrorPage';
+import ReactHookForm from './components/ReactHookForm/ReactHookForm';
+import UncontrolledForm from './components/UncontrolledForm/UncontrolledForm';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/react-hook-form',
+    element: <ReactHookForm />,
+  },
+  {
+    path: '/uncontrolled-form',
+    element: <UncontrolledForm />,
   },
 ]);
 
