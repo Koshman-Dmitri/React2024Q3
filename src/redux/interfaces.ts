@@ -1,11 +1,11 @@
 export interface IFormInput {
   name: string;
-  age: number | undefined;
+  age: string;
   email: string;
   password: string;
   confirmPassword: string;
-  gender: string;
+  gender: 'male' | 'female';
   isTerms: boolean;
-  img: string;
+  img: object | string;
   country: string;
 }

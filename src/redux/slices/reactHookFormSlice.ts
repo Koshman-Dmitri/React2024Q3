@@ -3,11 +3,11 @@ import { IFormInput } from '../interfaces';
 
 const initialState: IFormInput = {
   name: '',
-  age: undefined,
+  age: '',
   email: '',
   password: '',
   confirmPassword: '',
-  gender: '',
+  gender: 'male',
   isTerms: false,
   img: '',
   country: '',

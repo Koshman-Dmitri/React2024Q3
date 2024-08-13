@@ -5,7 +5,7 @@ function App() {
   return (
     <nav className={styles.nav}>
       <Link to="/react-hook-form">React Hook Form</Link>
-      <Link to="/uncontrolled-form">React Hook Form</Link>
+      <Link to="/uncontrolled-form">Uncontrolled Form</Link>
     </nav>
   );
 }

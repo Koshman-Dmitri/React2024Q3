@@ -7,14 +7,13 @@
 
 html {
   height: 100%;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 10px;
-  letter-spacing: 1px;
-  word-spacing: 10px;
 }
 
 body {
   height: 100%;
+  background-color: #3c3c3c;
 }
 
 a {
@@ -25,14 +24,20 @@ a {
 input {
   display: block;
   width: 100%;
-  padding: 10px 16px;
+  padding: 6px 12px;
   font-family: inherit;
-  letter-spacing: inherit;
-  word-spacing: inherit;
   color: inherit;
   border: 2px solid black;
   border-radius: 8px;
   outline: none;
+}
+
+input[type='checkbox'] {
+  display: inline-block;
+  margin-right: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
 button {
@@ -41,14 +46,12 @@ button {
   width: 100%;
   font-family: inherit;
   font-size: inherit;
-  letter-spacing: inherit;
-  word-spacing: inherit;
   color: white;
   background-color: black;
   border: unset;
   border-radius: 7px;
-  box-shadow: 1px 1px 2px black;
-  transition: opacity 0.2s ease-in;
+  box-shadow: 1px 1px 4px black;
+  transition: background-color 0.2s ease-in;
   cursor: pointer;
 }
 
@@ -59,7 +62,7 @@ button:disabled {
 
 @media (hover: hover) and (pointer: fine) {
   button:hover {
-    opacity: 0.75;
+    background-color: cornflowerblue;
   }
 }
 
