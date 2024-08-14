@@ -7,7 +7,7 @@ const initialState: IFormInput = {
   email: '',
   password: '',
   confirmPassword: '',
-  gender: 'male',
+  gender: '',
   isTerms: false,
   img: '',
   country: '',

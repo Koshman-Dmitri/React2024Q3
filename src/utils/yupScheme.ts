@@ -42,7 +42,7 @@ const schema = yup.object({
   gender: yup
     .string()
     .required()
-    .oneOf(['male', 'female'], 'Should be male or female')
+    .oneOf(['male', 'female', ''], 'Should be male or female')
     .label('gender'),
   isTerms: yup.bool().default(false).oneOf([true], 'You must accept the terms and conditions'),
   img: yup

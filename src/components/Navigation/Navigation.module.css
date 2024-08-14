@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  margin: 0 auto 40px;
+  padding-top: 30px;
+  color: whitesmoke;
+}
+
+.link {
+  font-size: 3rem;
+}

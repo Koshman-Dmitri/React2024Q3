@@ -4,8 +4,8 @@ export interface IFormInput {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: 'male' | 'female';
+  gender: 'male' | 'female' | '';
   isTerms: boolean;
-  img: object | string;
+  img: object | FileList | string;
   country: string;
 }

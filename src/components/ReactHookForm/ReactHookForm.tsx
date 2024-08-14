@@ -1,14 +1,21 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 import { IFormInput } from '../../redux/interfaces';
+import { useAppDispatch } from '../../redux/hooks/hooks';
+import { submitForm } from '../../redux/slices/reactHookFormSlice';
 import styles from './ReactHookForm.module.css';
 import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import schema from '../../utils/yupScheme';
+import convertToBase64 from '../../utils/convertToBase64';
 import Autocomplete from '../AutocompleteControl/AutocompleteControl';
 
 let flag = true;
 
 function ReactHookForm() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -29,8 +36,19 @@ function ReactHookForm() {
     });
   };
 
-  const onSumbit = (data: IFormInput) => {
-    console.log(data);
+  const onSumbit = async (data: IFormInput): Promise<void> => {
+    const file = data.img as FileList;
+    const base64img = await convertToBase64(file[0]);
+
+    const state: IFormInput = { ...data, img: base64img };
+    dispatch(submitForm(state));
+
+    navigate('/', {
+      state: {
+        data: state,
+        from: 'react-hook-form',
+      },
+    });
   };
 
   return (
