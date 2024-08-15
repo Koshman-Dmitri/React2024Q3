@@ -38,7 +38,7 @@ const schema = yup.object({
   confirmPassword: yup
     .string()
     .required('Retype your password')
-    .oneOf([yup.ref('password')], 'Passwords does not match'),
+    .oneOf([yup.ref('password')], 'Passwords do not match'),
   gender: yup
     .string()
     .required()
