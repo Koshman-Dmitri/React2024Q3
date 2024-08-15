@@ -1,6 +1,6 @@
 import { FormEvent, useRef, useState } from 'react';
 import { ValidationError } from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import schema from '../../utils/yupScheme';
 import { useAppDispatch } from '../../redux/hooks/hooks';
 import { submitForm } from '../../redux/slices/formsSlice';
@@ -85,79 +85,86 @@ function UncontrolledForm() {
     <>
       <h1 className={styles.title}>Uncontrolled form</h1>
       <form className={styles.form} onSubmit={handleSubmit} onChange={enableSubmit}>
-        <label className={styles.label} htmlFor="name">
-          Name
-          <input ref={nameRef} className={styles.input} id="name" />
-        </label>
-        {errors?.name && <p className={styles.errorMsg}>{errors.name}</p>}
+        <div className={styles.column}>
+          <label className={styles.label} htmlFor="name">
+            Name
+            <input ref={nameRef} className={styles.input} id="name" />
+          </label>
+          {errors?.name && <p className={styles.errorMsg}>{errors.name}</p>}
 
-        <label className={styles.label} htmlFor="age">
-          Age
-          <input ref={ageRef} className={styles.input} id="age" />
-        </label>
-        {errors?.age && <p className={styles.errorMsg}>{errors.age}</p>}
+          <label className={styles.label} htmlFor="age">
+            Age
+            <input ref={ageRef} className={styles.input} id="age" />
+          </label>
+          {errors?.age && <p className={styles.errorMsg}>{errors.age}</p>}
 
-        <label className={styles.label} htmlFor="email">
-          E-mail
-          <input ref={emailRef} className={styles.input} id="email" />
-        </label>
-        {errors?.email && <p className={styles.errorMsg}>{errors.email}</p>}
+          <label className={styles.label} htmlFor="email">
+            E-mail
+            <input ref={emailRef} className={styles.input} id="email" />
+          </label>
+          {errors?.email && <p className={styles.errorMsg}>{errors.email}</p>}
 
-        <label className={styles.label} htmlFor="password">
-          Password
-          <PasswordStrength password={passwordValue} />
-          <input
-            ref={passwordRef}
-            className={styles.input}
-            id="password"
-            onChange={(e) => setPasswordValue(e.target.value)}
-          />
-        </label>
-        {errors?.password && <p className={styles.errorMsg}>{errors.password}</p>}
+          <label className={styles.label} htmlFor="password">
+            Password
+            <PasswordStrength password={passwordValue} />
+            <input
+              ref={passwordRef}
+              className={styles.input}
+              id="password"
+              onChange={(e) => setPasswordValue(e.target.value)}
+            />
+          </label>
+          {errors?.password && <p className={styles.errorMsg}>{errors.password}</p>}
 
-        <label className={styles.label} htmlFor="confirmPassword">
-          Confirm Password
-          <input ref={confirmPasswordRef} className={styles.input} id="confirmPassword" />
-        </label>
-        {errors?.confirmPassword && <p className={styles.errorMsg}>{errors.confirmPassword}</p>}
+          <label className={styles.label} htmlFor="confirmPassword">
+            Confirm Password
+            <input ref={confirmPasswordRef} className={styles.input} id="confirmPassword" />
+          </label>
+          {errors?.confirmPassword && <p className={styles.errorMsg}>{errors.confirmPassword}</p>}
+        </div>
 
-        <label className={styles.label} htmlFor="gender">
-          Gender
-          <select ref={genderRef} className={styles.select} id="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </label>
-        {errors?.gender && <p className={styles.errorMsg}>{errors.gender}</p>}
+        <div className={styles.column}>
+          <label className={styles.label} htmlFor="gender">
+            Gender
+            <select ref={genderRef} className={styles.select} id="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </label>
+          {errors?.gender && <p className={styles.errorMsg}>{errors.gender}</p>}
 
-        <label className={styles.label} htmlFor="isTerms">
-          <input ref={termsRef} className={styles.input} id="isTerms" type="checkbox" />
-          Accept Terms and Conditions
-        </label>
-        {errors?.isTerms && <p className={styles.errorMsg}>{errors.isTerms}</p>}
+          <label className={styles.label} htmlFor="img">
+            Upload image
+            <input ref={imgRef} className={styles.input} id="img" type="file" />
+          </label>
+          {errors?.img && <p className={styles.errorMsg}>{errors.img}</p>}
 
-        <label className={styles.label} htmlFor="img">
-          Upload image
-          <input ref={imgRef} className={styles.input} id="img" type="file" />
-        </label>
-        {errors?.img && <p className={styles.errorMsg}>{errors.img}</p>}
+          <label className={styles.label} htmlFor="country">
+            Country
+            <input
+              ref={countryRef}
+              className={styles.input}
+              id="country"
+              onChange={(e) => setCountryValue(e.target.value)}
+            />
+            <Autocomplete propValue={countryValue} handleSuggestionClick={setCountry} />
+          </label>
+          {errors?.country && <p className={styles.errorMsg}>{errors.country}</p>}
 
-        <label className={styles.label} htmlFor="country">
-          Country
-          <input
-            ref={countryRef}
-            className={styles.input}
-            id="country"
-            onChange={(e) => setCountryValue(e.target.value)}
-          />
-          <Autocomplete propValue={countryValue} handleSuggestionClick={setCountry} />
-        </label>
-        {errors?.country && <p className={styles.errorMsg}>{errors.country}</p>}
+          <label className={styles.label} htmlFor="isTerms">
+            <input ref={termsRef} className={styles.input} id="isTerms" type="checkbox" />
+            Accept Terms and Conditions
+          </label>
+          {errors?.isTerms && <p className={styles.errorMsg}>{errors.isTerms}</p>}
+        </div>
 
         <button ref={submitRef} className={styles.submitButton} type="submit">
           Submit
         </button>
       </form>
+      <Link className={styles.backLink} to="/">
+        Back
+      </Link>
     </>
   );
 }
