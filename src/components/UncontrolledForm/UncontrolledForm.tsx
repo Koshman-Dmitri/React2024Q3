@@ -1,15 +1,24 @@
 import { FormEvent, useRef, useState } from 'react';
 import { ValidationError } from 'yup';
+import { useNavigate } from 'react-router-dom';
 import schema from '../../utils/yupScheme';
+import { useAppDispatch } from '../../redux/hooks/hooks';
+import { submitForm } from '../../redux/slices/formsSlice';
 import { IFormInput } from '../../redux/interfaces';
 import styles from '../shared/formStyle.module.css';
 import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import Autocomplete from '../AutocompleteControl/AutocompleteControl';
+import convertToBase64 from '../../utils/convertToBase64';
 
 type Errors = Record<keyof IFormInput, string>;
 
 function UncontrolledForm() {
   const [errors, setErrors] = useState<Errors>();
+  const [passwordValue, setPasswordValue] = useState('');
+  const [countryValue, setCountryValue] = useState('');
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
@@ -40,7 +49,14 @@ function UncontrolledForm() {
     try {
       await schema.validate(formData, { abortEarly: false });
       setErrors(undefined);
-      console.log('Form submitted');
+
+      const file = formData.img as FileList;
+      const base64img = await convertToBase64(file[0]);
+
+      const state: IFormInput = { ...formData, img: base64img, id: crypto.randomUUID() };
+      dispatch(submitForm(state));
+
+      navigate('/', { state: { isNew: true } });
     } catch (error) {
       if (submitRef.current) submitRef.current.disabled = true;
       const newErrors: { [key: string]: string } = {};
@@ -54,6 +70,11 @@ function UncontrolledForm() {
 
       setErrors(newErrors as Errors);
     }
+  };
+
+  const setCountry = (country: string): void => {
+    if (countryRef.current) countryRef.current.value = country;
+    setCountryValue('');
   };
 
   const enableSubmit = (): void => {
@@ -84,8 +105,13 @@ function UncontrolledForm() {
 
         <label className={styles.label} htmlFor="password">
           Password
-          <PasswordStrength password={passwordRef.current?.value || ''} />
-          <input ref={passwordRef} className={styles.input} id="password" />
+          <PasswordStrength password={passwordValue} />
+          <input
+            ref={passwordRef}
+            className={styles.input}
+            id="password"
+            onChange={(e) => setPasswordValue(e.target.value)}
+          />
         </label>
         {errors?.password && <p className={styles.errorMsg}>{errors.password}</p>}
 
@@ -118,11 +144,13 @@ function UncontrolledForm() {
 
         <label className={styles.label} htmlFor="country">
           Country
-          <input ref={countryRef} className={styles.input} id="country" />
-          <Autocomplete
-            propValue={countryRef.current?.value || ''}
-            handleSuggestionClick={() => console.log('TODO CLICK')}
+          <input
+            ref={countryRef}
+            className={styles.input}
+            id="country"
+            onChange={(e) => setCountryValue(e.target.value)}
           />
+          <Autocomplete propValue={countryValue} handleSuggestionClick={setCountry} />
         </label>
         {errors?.country && <p className={styles.errorMsg}>{errors.country}</p>}
 
