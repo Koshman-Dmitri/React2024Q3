@@ -1,47 +1,37 @@
-import { FromType } from '../../globalTypes';
-import { useAppSelector } from '../../redux/hooks/hooks';
+import { IFormInput } from '../../redux/interfaces';
 import styles from './FormData.module.css';
 
-interface FormDataProps {
-  title: FromType;
-  isNewData: boolean;
-}
-
-function FormData({ title, isNewData }: FormDataProps) {
-  const formState = title === 'react-hook-form' ? 'reactHookForm' : 'uncontrolledForm';
-  const formTitle = title === 'react-hook-form' ? 'React hook form Data' : 'Uncontrolled form Data';
-
-  const data = useAppSelector((state) => state[formState]);
+function FormData({ data, isNew }: { data: IFormInput; isNew: boolean }) {
+  const { name, age, email, password, confirmPassword, gender, isTerms, img, country } = data;
 
   return (
-    <div className={isNewData ? `${styles.wrapper} ${styles.active}` : styles.wrapper}>
+    <div className={isNew ? `${styles.wrapper} ${styles.active}` : styles.wrapper}>
       <div className={styles.backBefore} />
-      <h2 className={styles.title}>{formTitle}</h2>
       <p>
-        Name: <span>{data.name}</span>
+        Name: <span>{name}</span>
       </p>
       <p>
-        Age: <span>{data.age}</span>
+        Age: <span>{age}</span>
       </p>
       <p>
-        Email: <span>{data.email}</span>
+        Email: <span>{email}</span>
       </p>
       <p>
-        Password: <span>{data.password}</span>
+        Password: <span>{password}</span>
       </p>
       <p>
-        Confirm password: <span>{data.confirmPassword}</span>
+        Confirm password: <span>{confirmPassword}</span>
       </p>
       <p>
-        Gender: <span>{data.gender}</span>
+        Gender: <span>{gender}</span>
       </p>
       <p>
-        Accept Terms and Conditions agreement: <span>{data.isTerms ? 'Yes' : ''}</span>
+        Accept T&C agreement: <span>{isTerms ? 'Yes' : ''}</span>
       </p>
-      {data.img && <img src={data.img as string} className={styles.picture} alt="download pic" />}
       <p>
-        Country: <span>{data.country}</span>
+        Country: <span>{country}</span>
       </p>
+      {img && <img src={img as string} className={styles.picture} alt="download pic" />}
       <div className={styles.backAfter} />
     </div>
   );

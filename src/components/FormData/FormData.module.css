@@ -1,8 +1,7 @@
 .wrapper {
   position: relative;
-  margin: 0 auto 40px;
   padding: 20px;
-  max-width: 800px;
+  max-width: 400px;
   font-size: 2.4rem;
   border-radius: 16px;
   background-color: #3c3c3c;
@@ -28,7 +27,7 @@
   z-index: -1;
   padding: 5px;
   width: 101%;
-  height: 103%;
+  height: 101%;
   border-radius: 20px;
   background-image: conic-gradient(mediumseagreen, mediumseagreen);
 }
@@ -56,6 +55,7 @@
 }
 
 .wrapper p {
+  margin-bottom: 2px;
   color: white;
 }
 
@@ -65,12 +65,9 @@ span {
 
 .picture {
   display: block;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  z-index: 5;
   width: 250px;
-  height: 200px;
+  height: 150px;
+  border: 1px solid white;
   border-radius: 5px;
   object-fit: contain;
 }

@@ -8,4 +8,5 @@ export interface IFormInput {
   isTerms: boolean;
   img: object | FileList | string;
   country: string;
+  id?: string;
 }

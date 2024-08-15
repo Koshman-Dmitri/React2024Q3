@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { IFormInput } from '../../redux/interfaces';
 import { useAppDispatch } from '../../redux/hooks/hooks';
-import { submitForm } from '../../redux/slices/reactHookFormSlice';
+import { submitForm } from '../../redux/slices/formsSlice';
 import styles from '../shared/formStyle.module.css';
 import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import schema from '../../utils/yupScheme';
@@ -40,15 +40,10 @@ function ReactHookForm() {
     const file = data.img as FileList;
     const base64img = await convertToBase64(file[0]);
 
-    const state: IFormInput = { ...data, img: base64img };
+    const state: IFormInput = { ...data, img: base64img, id: crypto.randomUUID() };
     dispatch(submitForm(state));
 
-    navigate('/', {
-      state: {
-        data: state,
-        from: 'react-hook-form',
-      },
-    });
+    navigate('/', { state: { isNew: true } });
   };
 
   return (

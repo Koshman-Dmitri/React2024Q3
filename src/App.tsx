@@ -1,30 +1,38 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import FormData from './components/FormData/FormData';
-import { NavigationState } from './globalTypes';
 import Navigation from './components/Navigation/Navigation';
+import { useAppSelector } from './redux/hooks/hooks';
+import styles from './App.module.css';
+
+type NavState = { isNew: boolean };
 
 function App() {
-  const [isReactHookForm, setIsReactHookForm] = useState(false);
-  const [isUncontrolledForm, setIsUncontrolledForm] = useState(false);
+  const [isNew, setIsNew] = useState(false);
+  const forms = useAppSelector((state) => state.forms);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const state = location.state as NavigationState;
+  const state = location.state as NavState;
 
   useEffect(() => {
     if (!state) return;
 
-    if (state.from === 'react-hook-form') setIsReactHookForm(true);
-    else if (state.from === 'uncontrolled-form') setIsUncontrolledForm(true);
-    navigate('/');
+    if (state.isNew) {
+      setIsNew(true);
+      navigate('/');
+    }
   }, [state, navigate]);
 
   return (
     <>
       <Navigation />
-      <FormData title="react-hook-form" isNewData={isReactHookForm} />
-      <FormData title="uncontrolled-form" isNewData={isUncontrolledForm} />
+
+      <div className={styles.tilesWrapper}>
+        {forms.map((data, index) => (
+          <FormData key={data.id} data={data} isNew={forms.length - 1 === index && isNew} />
+        ))}
+      </div>
     </>
   );
 }
