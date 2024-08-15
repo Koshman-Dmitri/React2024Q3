@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { IFormInput } from '../../redux/interfaces';
 import { useAppDispatch } from '../../redux/hooks/hooks';
 import { submitForm } from '../../redux/slices/reactHookFormSlice';
-import styles from './ReactHookForm.module.css';
+import styles from '../shared/formStyle.module.css';
 import PasswordStrength from '../PasswordStrength/PasswordStrength';
 import schema from '../../utils/yupScheme';
 import convertToBase64 from '../../utils/convertToBase64';
