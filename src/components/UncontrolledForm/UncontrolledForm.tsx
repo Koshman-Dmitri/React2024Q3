@@ -29,7 +29,6 @@ function UncontrolledForm() {
   const termsRef = useRef<HTMLInputElement>(null);
   const imgRef = useRef<HTMLInputElement>(null);
   const countryRef = useRef<HTMLInputElement>(null);
-  const submitRef = useRef<HTMLButtonElement>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -58,7 +57,6 @@ function UncontrolledForm() {
 
       navigate('/', { state: { isNew: true } });
     } catch (error) {
-      if (submitRef.current) submitRef.current.disabled = true;
       const newErrors: { [key: string]: string } = {};
 
       const yupError = error as ValidationError;
@@ -77,14 +75,10 @@ function UncontrolledForm() {
     setCountryValue('');
   };
 
-  const enableSubmit = (): void => {
-    if (submitRef.current) submitRef.current.disabled = false;
-  };
-
   return (
     <>
       <h1 className={styles.title}>Uncontrolled form</h1>
-      <form className={styles.form} onSubmit={handleSubmit} onChange={enableSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.column}>
           <label className={styles.label} htmlFor="name">
             Name
@@ -158,7 +152,7 @@ function UncontrolledForm() {
           {errors?.isTerms && <p className={styles.errorMsg}>{errors.isTerms}</p>}
         </div>
 
-        <button ref={submitRef} className={styles.submitButton} type="submit">
+        <button className={styles.submitButton} type="submit">
           Submit
         </button>
       </form>
