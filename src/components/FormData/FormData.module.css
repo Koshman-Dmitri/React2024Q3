@@ -1,0 +1,73 @@
+.wrapper {
+  position: relative;
+  padding: 20px;
+  max-width: 400px;
+  font-size: 2.4rem;
+  border-radius: 16px;
+  background-color: #3c3c3c;
+}
+
+.wrapper.active .backBefore,
+.wrapper.active .backAfter {
+  animation: 2s spin linear 1;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.backBefore,
+.backAfter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  padding: 5px;
+  width: 101%;
+  height: 101%;
+  border-radius: 20px;
+  background-image: conic-gradient(mediumseagreen, mediumseagreen);
+}
+
+@keyframes spin {
+  0% {
+    --angle: 0deg;
+    background-image: conic-gradient(from var(--angle), transparent 10%, gold);
+  }
+  100% {
+    --angle: 360deg;
+    background-image: conic-gradient(from var(--angle), transparent 10%, gold);
+  }
+}
+
+.backBefore {
+  filter: blur(1.5rem);
+  opacity: 0.5;
+}
+
+.title {
+  font-size: inherit;
+  text-align: center;
+  color: cornflowerblue;
+}
+
+.wrapper p {
+  margin-bottom: 2px;
+  color: white;
+}
+
+span {
+  color: mediumseagreen;
+}
+
+.picture {
+  display: block;
+  width: 250px;
+  height: 150px;
+  border: 1px solid white;
+  border-radius: 5px;
+  object-fit: contain;
+}
